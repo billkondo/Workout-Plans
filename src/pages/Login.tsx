@@ -4,21 +4,30 @@ import {
   IonButton,
   IonGrid,
   IonRow,
-  IonCol
+  IonCol,
+  IonRouterLink,
+  IonAlert
 } from '@ionic/react';
 import { InputChangeEventDetail } from '@ionic/core';
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import { History } from 'history';
 
 import Center from 'components/center/Center';
 import Input from 'components/input/Input';
+import Password from 'components/input/Password';
 
 import routes from 'config/routes';
+
+import { doLogin } from 'network/login';
 
 type Fields = 'email' | 'password';
 type Errors = {
   email?: string;
   password?: string;
+};
+type Form = {
+  email: string;
+  password: string;
 };
 
 type Props = {
@@ -66,6 +75,7 @@ const initialState: State = {
 
 const Login: React.FC<Props> = ({ history }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [isErrorAlertOpen, setErrorAlert] = useState(false);
 
   const handleChange = (e: CustomEvent<InputChangeEventDetail>) => {
     if (e.target !== null) {
@@ -77,33 +87,50 @@ const Login: React.FC<Props> = ({ history }) => {
     }
   };
 
-  // Check state and update errors
-  const validateState = () => {
+  const validateState = (form: Form) => {
     const errors: Errors = {};
 
-    if (state.email.length === 0) errors.email = 'Email cannot be empty';
-    if (state.email.length > 255) errors.email = 'Email is too long';
+    if (form.email.length === 0) errors.email = 'Email cannot be empty';
+    if (form.email.length > 255) errors.email = 'Email is too long';
 
-    if (state.password.length === 0)
+    if (form.password.length === 0)
       errors.password = 'Password cannot be empty';
-    if (state.password.length > 255) errors.password = 'Password is too long';
+    if (form.password.length > 255) errors.password = 'Password is too long';
 
+    // Update errors state
     dispatch({ type: 'SET_ERRORS', errors });
 
     return !errors.email && !errors.password;
   };
 
-  const handleSubmit = () => {
-    // Validate form
-    if (validateState()) {
-      console.log('form is valid');
-      history.push(routes.home);
+  const handleSubmit = async () => {
+    try {
+      const form = {
+        email: state.email,
+        password: state.password
+      };
+
+      const isValid = validateState(form);
+
+      if (isValid) {
+        await doLogin(form);
+
+        history.push(routes.home);
+      }
+    } catch (err) {
+      setErrorAlert(true);
     }
   };
 
   return (
     <IonPage>
       <IonContent className="ion-padding" id="login-page">
+        <IonAlert
+          isOpen={isErrorAlertOpen}
+          onDidDismiss={() => setErrorAlert(false)}
+          header="Error"
+          message="It was not possible to login"
+        />
         <Center>
           <IonGrid>
             <IonRow>
@@ -121,11 +148,10 @@ const Login: React.FC<Props> = ({ history }) => {
 
             <IonRow>
               <IonCol>
-                <Input
+                <Password
                   error={state.errors.password}
                   handleChange={handleChange}
                   value={state.password}
-                  type={'password'}
                   name={'password'}
                   label="Password"
                 />
@@ -137,6 +163,20 @@ const Login: React.FC<Props> = ({ history }) => {
                 <IonButton expand="block" onClick={handleSubmit}>
                   Enter
                 </IonButton>
+              </IonCol>
+            </IonRow>
+
+            <IonRow>
+              <IonCol>
+                <IonRouterLink>
+                  <p className="ion-text-start">Esqueci minha senha </p>
+                </IonRouterLink>
+              </IonCol>
+
+              <IonCol>
+                <IonRouterLink>
+                  <p className="ion-text-end">Criar conta </p>
+                </IonRouterLink>
               </IonCol>
             </IonRow>
           </IonGrid>

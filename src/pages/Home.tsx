@@ -1,23 +1,38 @@
-import { IonContent, IonPage, IonRouterLink } from '@ionic/react';
+import {
+  IonContent,
+  IonPage,
+  IonRouterLink,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonMenuButton,
+  IonMenu,
+  IonButton
+} from '@ionic/react';
 import React from 'react';
+import { ExitToApp } from '@material-ui/icons';
+
+import Center from 'components/center/Center';
 
 const Home: React.FC = () => {
   return (
     <IonPage>
-      <IonContent className="ion-padding" id="home-page">
-        The world is your oyster.
-        <p>
-          If you get lost, the{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://ionicframework.com/docs/"
-          >
-            docs
-          </a>{' '}
-          will be your guide.
-        </p>
-        <IonRouterLink href="/login">Logar</IonRouterLink>
+      <IonMenu side="start" contentId="app">
+        <IonHeader>
+          <IonToolbar></IonToolbar>
+        </IonHeader>
+      </IonMenu>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton></IonMenuButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent className="ion-padding" id="app">
+        <Center>
+          <IonRouterLink href="/login">Logar</IonRouterLink>
+        </Center>
       </IonContent>
     </IonPage>
   );
