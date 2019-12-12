@@ -18,7 +18,7 @@ import Password from 'components/input/Password';
 
 import routes from 'config/routes';
 
-import { doLogin } from 'network/login';
+import { useLogin } from 'hooks/auth';
 
 type Fields = 'email' | 'password';
 type Errors = {
@@ -76,6 +76,7 @@ const initialState: State = {
 const Login: React.FC<Props> = ({ history }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isErrorAlertOpen, setErrorAlert] = useState(false);
+  const login = useLogin();
 
   const handleChange = (e: CustomEvent<InputChangeEventDetail>) => {
     if (e.target !== null) {
@@ -113,11 +114,12 @@ const Login: React.FC<Props> = ({ history }) => {
       const isValid = validateState(form);
 
       if (isValid) {
-        await doLogin(form);
+        await login(form);
 
         history.push(routes.home);
       }
     } catch (err) {
+      console.log(err);
       setErrorAlert(true);
     }
   };
@@ -132,54 +134,56 @@ const Login: React.FC<Props> = ({ history }) => {
           message="It was not possible to login"
         />
         <Center>
-          <IonGrid>
-            <IonRow>
-              <IonCol>
-                <Input
-                  error={state.errors.email}
-                  handleChange={handleChange}
-                  value={state.email}
-                  type="email"
-                  name="email"
-                  label="Email"
-                />
-              </IonCol>
-            </IonRow>
+          <form>
+            <IonGrid>
+              <IonRow>
+                <IonCol>
+                  <Input
+                    error={state.errors.email}
+                    handleChange={handleChange}
+                    value={state.email}
+                    type="email"
+                    name="email"
+                    label="Email"
+                  />
+                </IonCol>
+              </IonRow>
 
-            <IonRow>
-              <IonCol>
-                <Password
-                  error={state.errors.password}
-                  handleChange={handleChange}
-                  value={state.password}
-                  name={'password'}
-                  label="Password"
-                />
-              </IonCol>
-            </IonRow>
+              <IonRow>
+                <IonCol>
+                  <Password
+                    error={state.errors.password}
+                    handleChange={handleChange}
+                    value={state.password}
+                    name={'password'}
+                    label="Password"
+                  />
+                </IonCol>
+              </IonRow>
 
-            <IonRow style={{ marginTop: 32 }}>
-              <IonCol>
-                <IonButton expand="block" onClick={handleSubmit}>
-                  Enter
-                </IonButton>
-              </IonCol>
-            </IonRow>
+              <IonRow style={{ marginTop: 32 }}>
+                <IonCol>
+                  <IonButton expand="block" onClick={handleSubmit}>
+                    Enter
+                  </IonButton>
+                </IonCol>
+              </IonRow>
 
-            <IonRow>
-              <IonCol>
-                <IonRouterLink>
-                  <p className="ion-text-start">Esqueci minha senha </p>
-                </IonRouterLink>
-              </IonCol>
+              <IonRow>
+                <IonCol>
+                  <IonRouterLink>
+                    <p className="ion-text-start">Esqueci minha senha </p>
+                  </IonRouterLink>
+                </IonCol>
 
-              <IonCol>
-                <IonRouterLink>
-                  <p className="ion-text-end">Criar conta </p>
-                </IonRouterLink>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
+                <IonCol>
+                  <IonRouterLink>
+                    <p className="ion-text-end">Criar conta </p>
+                  </IonRouterLink>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </form>
         </Center>
       </IonContent>
     </IonPage>

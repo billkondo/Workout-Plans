@@ -7,6 +7,8 @@ import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import Login from './pages/Login';
 
+import { useFirebase } from 'hooks/firebase';
+
 // Config files
 import routes from 'config/routes'; // URL definitions
 
@@ -29,16 +31,20 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path={routes.home} component={Home} exact={true} />
-        <Route exact path="/" render={() => <Redirect to={routes.home} />} />
-        <Route exact path={routes.login} component={Login} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  useFirebase();
+
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route path={routes.home} component={Home} exact={true} />
+          <Route exact path="/" render={() => <Redirect to={routes.home} />} />
+          <Route exact path={routes.login} component={Login} />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

@@ -7,9 +7,12 @@ import {
   IonButtons,
   IonMenuButton,
   IonMenu,
-  IonButton
+  IonList,
+  IonItem,
+  IonLabel
 } from '@ionic/react';
 import React from 'react';
+import { Icon } from '@material-ui/core';
 import { ExitToApp } from '@material-ui/icons';
 
 import Center from 'components/center/Center';
@@ -21,6 +24,19 @@ const Home: React.FC = () => {
         <IonHeader>
           <IonToolbar></IonToolbar>
         </IonHeader>
+
+        <IonContent>
+          <IonList>
+            <IonItem onClick={() => console.log('OI')}>
+              <Icon slot="start">
+                <ExitToApp />
+              </Icon>
+              <IonLabel>
+                <p>Logout</p>
+              </IonLabel>
+            </IonItem>
+          </IonList>
+        </IonContent>
       </IonMenu>
       <IonHeader>
         <IonToolbar>
