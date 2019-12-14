@@ -27,7 +27,7 @@ const useFirebase = () => {
         setAuth(false);
       }
     });
-  }, []);
+  }, [setAuth]);
 };
 
 const useFirebaseMethods = () => {

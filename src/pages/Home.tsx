@@ -1,56 +1,48 @@
 import {
-  IonContent,
-  IonPage,
-  IonRouterLink,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonMenuButton,
-  IonMenu,
-  IonList,
-  IonItem,
-  IonLabel
+  IonLabel,
+  IonTabs,
+  IonTabBar,
+  IonTabButton,
+  IonRouterOutlet,
+  IonIcon
 } from '@ionic/react';
+import { Route, Redirect } from 'react-router-dom';
 import React from 'react';
-import { Icon } from '@material-ui/core';
-import { ExitToApp } from '@material-ui/icons';
+import { calendar, bicycle } from 'ionicons/icons';
 
-import Center from 'components/center/Center';
+import routes from 'config/routes';
+
+import Training from 'pages/Training';
+import Exercices from 'pages/Exercises';
 
 const Home: React.FC = () => {
   return (
-    <IonPage>
-      <IonMenu side="start" contentId="app">
-        <IonHeader>
-          <IonToolbar></IonToolbar>
-        </IonHeader>
+    <IonTabs>
+      <IonRouterOutlet id="tabs">
+        <Redirect exact path={routes.home} to="/home/training" />
+        <Route
+          exact
+          path={routes.home_training}
+          render={() => <Training />}
+        ></Route>
+        <Route
+          exact={true}
+          path={routes.home_exercises}
+          render={() => <Exercices />}
+        ></Route>
+      </IonRouterOutlet>
+      <IonTabBar slot="bottom">
+        <IonTabButton tab="training" href={routes.home_training}>
+          <IonIcon icon={calendar} />
+          <IonLabel>Treinos</IonLabel>
+        </IonTabButton>
 
-        <IonContent>
-          <IonList>
-            <IonItem onClick={() => console.log('OI')}>
-              <Icon slot="start">
-                <ExitToApp />
-              </Icon>
-              <IonLabel>
-                <p>Logout</p>
-              </IonLabel>
-            </IonItem>
-          </IonList>
-        </IonContent>
-      </IonMenu>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton></IonMenuButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding" id="app">
-        <Center>
-          <IonRouterLink href="/login">Logar</IonRouterLink>
-        </Center>
-      </IonContent>
-    </IonPage>
+        <IonTabButton tab="exercises" href={routes.home_exercises}>
+          <IonIcon icon={bicycle} />
+          <IonLabel>Exercícios</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
   );
 };
 
