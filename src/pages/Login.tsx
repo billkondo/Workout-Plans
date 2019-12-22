@@ -116,7 +116,7 @@ const Login: React.FC<Props> = ({ history }) => {
       if (isValid) {
         await login(form);
 
-        history.push(routes.home);
+        history.push(routes.home.root);
       }
     } catch (err) {
       console.log(err);

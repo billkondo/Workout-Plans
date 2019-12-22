@@ -6,6 +6,7 @@ import { IonReactRouter } from '@ionic/react-router';
 // Custom components
 import Home from './pages/Home';
 import Login from './pages/Login';
+import BuildTraining from './pages/build_training/BuildTraining';
 
 import { useFirebase } from 'hooks/firebase';
 
@@ -38,8 +39,17 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet id="main">
-          <Route path={routes.home} component={Home} />
-          <Route exact path="/" render={() => <Redirect to={routes.home} />} />
+          <Route path={routes.home.root} component={Home} />
+          <Route
+            exact
+            path="/"
+            render={() => <Redirect to={routes.home.root} />}
+          />
+          <Route
+            exact
+            path={routes.training.build.root}
+            component={BuildTraining}
+          />
           <Route exact path={routes.login} component={Login} />
         </IonRouterOutlet>
       </IonReactRouter>

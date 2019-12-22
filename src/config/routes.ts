@@ -1,8 +1,16 @@
 const routes = {
   login: '/login',
-  home: '/home',
-  home_training: '/home/training',
-  home_exercises: '/home/exercises'
+  home: {
+    root: '/home',
+    training: '/home/training',
+    exercises: '/home/exercises'
+  },
+  training: {
+    build: {
+      root: '/training/build',
+      muscles: '/training/build/muscles'
+    }
+  }
 };
 
 export default routes;
