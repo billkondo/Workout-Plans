@@ -40,20 +40,23 @@ type MusclesType = {
   [key: string]: Muscle;
 };
 
-const muscles: MusclesType = {
+export const muscles: MusclesType = {
   chest: {
     type: registeredMuscles.CHEST,
     label: 'Peitoral'
   },
   upperChest: {
     type: registeredMuscles.UPPER_CHEST,
-    label: 'Superior'
+    label: 'Peitoral Superior'
   },
   middleChest: {
     type: registeredMuscles.MIDDLE_CHEST,
-    label: 'Medial'
+    label: 'Peitoral Medial'
   },
-  lowerChest: { type: registeredMuscles.LOWER_CHEST, label: 'Inferior' },
+  lowerChest: {
+    type: registeredMuscles.LOWER_CHEST,
+    label: 'Peitoral Inferior'
+  },
 
   back: { type: registeredMuscles.BACK, label: 'Costas' },
   lats: { type: registeredMuscles.LATS, label: 'Dorsais' },

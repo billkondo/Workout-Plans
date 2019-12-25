@@ -10,7 +10,7 @@ import {
 } from '@ionic/react';
 import { Collapse } from '@material-ui/core';
 
-import Check from 'components/check/Check';
+import CheckComponent from 'components/check/Check';
 import SubMuscleLine from 'components/muscle_selector/SubMuscleLine';
 import { MuscleOption, Muscle } from 'types/muscles';
 
@@ -36,9 +36,9 @@ const MuscleCard: React.FC<Prop> = ({
     <IonCard>
       <IonCardHeader className="ion-padding">
         <IonGrid>
-          <IonRow>
-            <IonCol>
-              <Check
+          <IonRow className="ion-align-items-center">
+            <div style={{ position: 'absolute', zIndex: 999 }}>
+              <CheckComponent
                 isSelected={isMainMuscleSelected}
                 handleCheck={() => selectMuscle(muscleOption.muscle)}
                 handleUncheck={() => {
@@ -47,12 +47,12 @@ const MuscleCard: React.FC<Prop> = ({
                     unselectMuscle(muscle);
                 }}
               />
-            </IonCol>
-          </IonRow>
+            </div>
 
-          <IonRow>
             <IonCol>
-              <IonCardTitle>{muscleOption.muscle.label}</IonCardTitle>
+              <IonCardTitle style={{ marginLeft: 40 }}>
+                {muscleOption.muscle.label}
+              </IonCardTitle>
             </IonCol>
           </IonRow>
         </IonGrid>

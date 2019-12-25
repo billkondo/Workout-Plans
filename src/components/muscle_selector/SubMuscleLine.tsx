@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonGrid, IonRow, IonCol, IonCardSubtitle } from '@ionic/react';
 
-import Check from 'components/check/Check';
+import CheckComponent from 'components/check/Check';
 
 import { Muscle } from 'types/muscles';
 
@@ -20,17 +20,20 @@ const SubMuscleLine: React.FC<Prop> = ({
 }) => {
   return (
     <IonGrid>
-      <IonRow>
-        <IonCol style={{ alignSelf: 'center' }} size="2">
-          <Check
+      <IonRow className="ion-align-items-center">
+        <div style={{ position: 'absolute', zIndex: 999 }}>
+          <CheckComponent
             isSelected={isSelected}
             handleCheck={selectMuscle}
             handleUncheck={unselectMuscle}
             isSmall={true}
           />
-        </IonCol>
-        <IonCol style={{ alignSelf: 'center' }} size="10">
-          <IonCardSubtitle>{subMuscle.label}</IonCardSubtitle>
+        </div>
+
+        <IonCol>
+          <IonCardSubtitle style={{ marginLeft: 32 }}>
+            {subMuscle.label}
+          </IonCardSubtitle>
         </IonCol>
       </IonRow>
     </IonGrid>
