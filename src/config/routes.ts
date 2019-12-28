@@ -7,8 +7,12 @@ const routes = {
   },
   training: {
     build: {
-      root: '/training/build',
-      muscles: '/training/build/muscles'
+      root: '/training/build'
+    }
+  },
+  exercises: {
+    build: {
+      root: '/exercises/build'
     }
   }
 };

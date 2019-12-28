@@ -5,7 +5,7 @@ import { RootState, actions } from 'state';
 
 import { useFirebaseMethods } from 'hooks/firebase';
 
-const useAuth = () => {
+export const useAuth = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
 
@@ -22,7 +22,7 @@ type LoginForm = {
   password: string;
 };
 
-const useLogin = () => {
+export const useLogin = () => {
   const { loginWithFirebase } = useFirebaseMethods();
 
   const login = async (form: LoginForm) => {
@@ -32,7 +32,7 @@ const useLogin = () => {
   return login;
 };
 
-const useLogout = () => {
+export const useLogout = () => {
   const { logoutWithFirebase } = useFirebaseMethods();
 
   const logout = async () => {
@@ -41,5 +41,3 @@ const useLogout = () => {
 
   return logout;
 };
-
-export { useAuth, useLogin, useLogout };

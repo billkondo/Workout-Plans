@@ -1,26 +1,33 @@
 import React, { useContext } from 'react';
-import { IonGrid, IonRow, IonCol, IonChip, IonLabel } from '@ionic/react';
-import { format } from 'date-fns';
+import {
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonChip,
+  IonLabel,
+  IonText,
+  IonTextarea
+} from '@ionic/react';
 import { colors } from '@material-ui/core';
 
-import { BuildTrainingContext } from './BuildTraining';
+import { BuildExerciseContext } from './BuildExercise';
 
 const FinalPlan = () => {
-  const context = useContext(BuildTrainingContext);
+  const context = useContext(BuildExerciseContext);
 
   if (!context) return null;
 
-  const { muscles, exerciseOptions, dates, errors } = context;
+  const { muscles, errors, title, description } = context;
 
   const isMusclesOK = !errors.muscles;
-  const isExerciseOptionsOK = !errors.exerciseOptions;
-  const isDatesOK = !errors.dates;
+  const isTitleOK = !errors.title;
+  const isDescriptionOK = !errors.description;
 
   return (
     <IonGrid>
       <IonRow>
         <IonCol>
-          <h3 className="ion-text-center">Treino final</h3>
+          <h3 className="ion-text-center">Exercício final</h3>
         </IonCol>
       </IonRow>
 
@@ -63,29 +70,29 @@ const FinalPlan = () => {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <h6>Exercícios</h6>
+                <h6>Nome do exercício</h6>
               </IonCol>
             </IonRow>
 
-            {!isExerciseOptionsOK && (
+            {!isTitleOK && (
               <IonRow style={{ color: colors.red.A700 }}>
-                <IonCol>{errors.exerciseOptions}</IonCol>
+                <IonCol>{errors.title}</IonCol>
               </IonRow>
             )}
 
-            {isExerciseOptionsOK && exerciseOptions.length === 0 && (
+            {isTitleOK && !title && (
               <IonRow>
-                <IonCol>Nenhum exercício selecionado</IonCol>
+                <IonCol>Nenhum nome foi escolhido</IonCol>
               </IonRow>
             )}
 
-            {exerciseOptions.map(e => {
-              return (
-                <IonChip key={e.id}>
-                  <IonLabel>{e.exercise.title}</IonLabel>
-                </IonChip>
-              );
-            })}
+            {!!title && (
+              <IonRow>
+                <IonCol>
+                  <IonText>{title}</IonText>
+                </IonCol>
+              </IonRow>
+            )}
 
             <IonRow></IonRow>
           </IonGrid>
@@ -97,27 +104,25 @@ const FinalPlan = () => {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <h6>Dias</h6>
+                <h6>Nome do exercício</h6>
               </IonCol>
             </IonRow>
 
-            {!isDatesOK && (
+            {!isDescriptionOK && (
               <IonRow style={{ color: colors.red.A700 }}>
-                <IonCol>{errors.dates}</IonCol>
+                <IonCol>{errors.description}</IonCol>
               </IonRow>
             )}
 
-            {isDatesOK && dates.length === 0 && (
+            {isDescriptionOK && !description && (
               <IonRow>
-                <IonCol>Nenhum dia selecionado</IonCol>
+                <IonCol>Nenhum nome foi escolhido</IonCol>
               </IonRow>
             )}
 
-            {dates.map(d => {
-              if (!d.value) return null;
-              const formatedString = format(Date.parse(d.value), 'dd/MM/yyyy');
-              return <IonChip key={d.id}>{formatedString}</IonChip>;
-            })}
+            {!!description && (
+              <IonTextarea value={description} readonly autoGrow={true} />
+            )}
 
             <IonRow></IonRow>
           </IonGrid>

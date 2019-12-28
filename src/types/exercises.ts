@@ -1,5 +1,7 @@
 import { Muscle } from 'types/muscles';
 
+export type ExerciseTextKeys = 'title' | 'description';
+
 export type Exercise = {
   title: string;
   description?: string;
@@ -13,4 +15,10 @@ export type ExerciseOption = {
   reps?: number;
   restInterval?: number;
   id: string;
+};
+
+export type ExerciseError = {
+  muscles?: string;
+  title?: string;
+  description?: string;
 };

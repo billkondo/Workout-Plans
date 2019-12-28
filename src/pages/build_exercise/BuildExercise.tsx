@@ -7,76 +7,59 @@ import {
   IonButtons,
   IonButton,
   IonIcon,
+  IonTitle,
   IonGrid,
   IonRow,
-  IonCol,
-  IonTitle
+  IonCol
 } from '@ionic/react';
 import { arrowBack } from 'ionicons/icons';
 import { Divider } from '@material-ui/core';
 
 import routes from 'config/routes';
 
-// Components
 import MuscleSelector from './MuscleSelector';
-import ExercisesSelector from './ExercisesSelector';
-import DaySelector from './DaySelector';
+import TextSelector from './TextSelector';
 import FinalPlan from './FinalPlan';
 
-import { useTrainingBuild } from 'hooks/training/build';
-
 import { Muscle } from 'types/muscles';
-import { ExerciseOption } from 'types/exercises';
-import { AppDate } from 'types/dates';
-import { TrainingError } from 'types/training';
+import { ExerciseError, ExerciseTextKeys } from 'types/exercises';
 
-interface BuildTrainingContextInterface {
+import { useExerciseBuild } from 'hooks/exercises/build';
+
+interface BuildExerciseContextInterface {
   muscles: Array<Muscle>;
   addMuscle: (muscle: Muscle) => void;
   removeMuscle: (muscle: Muscle) => void;
 
-  exerciseOptions: Array<ExerciseOption>;
-  addExerciseOption: (exerciseOption: ExerciseOption) => void;
-  removeExerciseOption: (exerciseOption: ExerciseOption) => void;
+  title: string;
+  description: string;
+  changeText: (key: ExerciseTextKeys, value: string) => void;
 
-  dates: Array<AppDate>;
-  addDate: (date: AppDate) => void;
-  removeDate: (date: AppDate) => void;
-  editDate: (date: AppDate) => void;
-
-  errors: TrainingError;
+  errors: ExerciseError;
 }
 
-export const BuildTrainingContext = React.createContext<BuildTrainingContextInterface | null>(
+export const BuildExerciseContext = React.createContext<BuildExerciseContextInterface | null>(
   null
 );
 
-const BuildTraining = () => {
+const BuildExercise = () => {
   const {
-    state,
     addMuscle,
     removeMuscle,
-    addExerciseOption,
-    removeExerciseOption,
-    addDate,
-    removeDate,
-    editDate,
-    createTraining
-  } = useTrainingBuild();
+    state,
+    changeText,
+    createExercise
+  } = useExerciseBuild();
 
   return (
-    <BuildTrainingContext.Provider
+    <BuildExerciseContext.Provider
       value={{
         muscles: state.muscles,
         addMuscle,
         removeMuscle,
-        addExerciseOption,
-        removeExerciseOption,
-        exerciseOptions: state.exerciseOptions,
-        addDate,
-        editDate,
-        removeDate,
-        dates: state.dates,
+        title: state.title,
+        description: state.description,
+        changeText,
         errors: state.errors
       }}
     >
@@ -85,18 +68,18 @@ const BuildTraining = () => {
           <IonToolbar>
             <IonButtons slot="primary">
               <IonButton
-                routerLink={routes.home.training}
+                routerLink={routes.home.exercises}
                 routerDirection="back"
               >
                 <IonIcon icon={arrowBack}></IonIcon>
               </IonButton>
             </IonButtons>
 
-            <IonTitle>Montando treino</IonTitle>
+            <IonTitle>Montando exercício</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent className="ion-padding">
-          <IonGrid>
+        <IonContent>
+          <IonGrid className="ion-padding">
             <IonRow>
               <IonCol>
                 <MuscleSelector />
@@ -105,13 +88,7 @@ const BuildTraining = () => {
 
             <IonRow>
               <IonCol>
-                <ExercisesSelector />
-              </IonCol>
-            </IonRow>
-
-            <IonRow>
-              <IonCol>
-                <DaySelector />
+                <TextSelector />
               </IonCol>
             </IonRow>
 
@@ -129,7 +106,7 @@ const BuildTraining = () => {
 
             <IonRow style={{ marginTop: 32 }}>
               <IonCol>
-                <IonButton expand="block" onClick={createTraining}>
+                <IonButton expand="block" onClick={createExercise}>
                   Criar
                 </IonButton>
               </IonCol>
@@ -137,8 +114,8 @@ const BuildTraining = () => {
           </IonGrid>
         </IonContent>
       </IonPage>
-    </BuildTrainingContext.Provider>
+    </BuildExerciseContext.Provider>
   );
 };
 
-export default BuildTraining;
+export default BuildExercise;
