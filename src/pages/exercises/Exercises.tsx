@@ -12,6 +12,8 @@ import {
 
 import routes from 'config/routes';
 
+import MyExercises from './MyExercises';
+
 const Exercises = () => {
   return (
     <IonPage>
@@ -35,6 +37,12 @@ const Exercises = () => {
                   </IonGrid>
                 </IonCardContent>
               </IonCard>
+            </IonCol>
+          </IonRow>
+
+          <IonRow style={{ marginTop: 16 }}>
+            <IonCol>
+              <MyExercises />
             </IonCol>
           </IonRow>
         </IonGrid>

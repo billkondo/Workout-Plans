@@ -1,31 +1,31 @@
-const SET_AUTH = 'SET_AUTH';
+const SET_USER_ID = 'SET_USER_ID';
 
 interface AuthenticationState {
-  isAuth: boolean;
+  userID: string;
 }
 
-interface SetAuthAction {
-  type: typeof SET_AUTH;
+interface SetUserIDAction {
+  type: typeof SET_USER_ID;
   payload: {
-    isAuth: boolean;
+    userID: string;
   };
 }
 
-const setAuth = (isAuth: boolean): SetAuthAction => ({
-  type: SET_AUTH,
+const setUserID = (userID: string): SetUserIDAction => ({
+  type: SET_USER_ID,
   payload: {
-    isAuth
+    userID
   }
 });
 
 const actions = {
-  setAuth
+  setUserID
 };
 
-type AuthenticationActionType = SetAuthAction;
+type AuthenticationActionType = SetUserIDAction;
 
 const initialState: AuthenticationState = {
-  isAuth: false
+  userID: ''
 };
 
 const reducer = (
@@ -33,6 +33,12 @@ const reducer = (
   action: AuthenticationActionType
 ): AuthenticationState => {
   switch (action.type) {
+    case SET_USER_ID:
+      return {
+        ...state,
+        userID: action.payload.userID
+      };
+
     default:
       return state;
   }

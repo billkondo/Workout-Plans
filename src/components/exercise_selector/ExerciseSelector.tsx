@@ -16,7 +16,8 @@ const E = {
     title: 'Pull Over',
     description: 'Exercício para costas',
     muscles: [muscles.chest, muscles.back, muscles.lats],
-    id: '1'
+    id: '1',
+    userID: '3413'
   },
   id: '1'
 };

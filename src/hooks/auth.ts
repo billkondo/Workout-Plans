@@ -7,14 +7,16 @@ import { useFirebaseMethods } from 'hooks/firebase';
 
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+  const userID = useSelector((state: RootState) => state.auth.userID);
 
-  const setAuth = useCallback(
-    (auth: boolean) => dispatch(actions.auth.setAuth(auth)),
+  const isAuth = !!userID;
+
+  const setUserID = useCallback(
+    (userID: string) => dispatch(actions.auth.setUserID(userID)),
     [dispatch]
   );
 
-  return { isAuth, setAuth };
+  return { isAuth, setUserID, userID };
 };
 
 type LoginForm = {

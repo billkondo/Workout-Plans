@@ -10,10 +10,12 @@ import {
   IonTitle,
   IonGrid,
   IonRow,
-  IonCol
+  IonCol,
+  IonAlert
 } from '@ionic/react';
 import { arrowBack } from 'ionicons/icons';
 import { Divider } from '@material-ui/core';
+import { History } from 'history';
 
 import routes from 'config/routes';
 
@@ -25,6 +27,7 @@ import { Muscle } from 'types/muscles';
 import { ExerciseError, ExerciseTextKeys } from 'types/exercises';
 
 import { useExerciseBuild } from 'hooks/exercises/build';
+import { useExercisesGetter } from 'hooks/exercises/getter';
 
 interface BuildExerciseContextInterface {
   muscles: Array<Muscle>;
@@ -42,14 +45,27 @@ export const BuildExerciseContext = React.createContext<BuildExerciseContextInte
   null
 );
 
-const BuildExercise = () => {
+type Props = {
+  history: History;
+};
+
+const BuildExercise: React.FC<Props> = ({ history }) => {
   const {
     addMuscle,
     removeMuscle,
     state,
     changeText,
-    createExercise
+    createExercise,
+    ignoreFailed
   } = useExerciseBuild();
+  const { backRoute } = useExercisesGetter();
+
+  const create = async () => {
+    if (await createExercise()) {
+      // Change routes
+      history.push(backRoute);
+    }
+  };
 
   return (
     <BuildExerciseContext.Provider
@@ -64,6 +80,13 @@ const BuildExercise = () => {
       }}
     >
       <IonPage>
+        <IonAlert
+          isOpen={state.failed}
+          onDidDismiss={ignoreFailed}
+          header="Erro"
+          message="Não foi possível criar o exercício"
+        ></IonAlert>
+
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="primary">
@@ -106,7 +129,7 @@ const BuildExercise = () => {
 
             <IonRow style={{ marginTop: 32 }}>
               <IonCol>
-                <IonButton expand="block" onClick={createExercise}>
+                <IonButton expand="block" onClick={create}>
                   Criar
                 </IonButton>
               </IonCol>

@@ -1,32 +1,35 @@
 import { useReducer } from 'react';
 
 import { Muscle } from 'types/muscles';
-import { ExerciseError, ExerciseTextKeys } from 'types/exercises';
+import { ExerciseError, ExerciseTextKeys, ExerciseForm } from 'types/exercises';
+
+import { useStore } from 'hooks/store';
 
 type State = {
   muscles: Array<Muscle>;
   title: string;
   description: string;
   errors: ExerciseError;
-};
-
-type Form = {
-  muscles: Array<Muscle>;
-  title: string;
-  description: string;
+  failed: boolean;
 };
 
 type Actions =
   | { type: 'ADD_MUSCLE'; muscle: Muscle }
   | { type: 'REMOVE_MUSCLE'; muscle: Muscle }
   | { type: 'CHANGE_TEXT'; key: ExerciseTextKeys; value: string }
-  | { type: 'SET_ERRORS'; errors: ExerciseError };
+  | { type: 'SET_ERRORS'; errors: ExerciseError }
+  | {
+      type: 'SET_FAILED';
+      failed: boolean;
+    }
+  | { type: 'RESET' };
 
 const initialState: State = {
   muscles: [],
   title: '',
   description: '',
-  errors: {}
+  errors: {},
+  failed: false
 };
 
 const reducer = (state = initialState, action: Actions): State => {
@@ -63,12 +66,22 @@ const reducer = (state = initialState, action: Actions): State => {
         errors: action.errors
       };
 
+    case 'SET_FAILED':
+      return {
+        ...state,
+        failed: action.failed
+      };
+
+    case 'RESET':
+      return initialState;
+
     default:
       return state;
   }
 };
 
 export const useExerciseBuild = () => {
+  const { addExercise } = useStore();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const addMuscle = (muscle: Muscle) =>
@@ -80,7 +93,12 @@ export const useExerciseBuild = () => {
   const changeText = (key: ExerciseTextKeys, value: string) =>
     dispatch({ type: 'CHANGE_TEXT', key, value });
 
-  const validate = (form: Form): boolean => {
+  const setFailed = (failed: boolean) =>
+    dispatch({ type: 'SET_FAILED', failed });
+
+  const reset = () => dispatch({ type: 'RESET' });
+
+  const validate = (form: ExerciseForm): boolean => {
     const errors: ExerciseError = {};
 
     if (form.muscles.length === 0)
@@ -93,14 +111,26 @@ export const useExerciseBuild = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const createExercise = () => {
-    const form: Form = {
-      muscles: state.muscles,
-      title: state.title,
-      description: state.description
-    };
+  const ignoreFailed = () => setFailed(false);
 
-    if (validate(form)) {
+  const createExercise = async (): Promise<boolean> => {
+    try {
+      const form: ExerciseForm = {
+        muscles: state.muscles,
+        title: state.title,
+        description: state.description
+      };
+
+      if (validate(form)) {
+        await addExercise(form);
+        reset();
+        return true;
+      }
+
+      return false;
+    } catch (err) {
+      setFailed(true);
+      return false;
     }
   };
 
@@ -109,6 +139,7 @@ export const useExerciseBuild = () => {
     addMuscle,
     removeMuscle,
     changeText,
-    createExercise
+    createExercise,
+    ignoreFailed
   };
 };

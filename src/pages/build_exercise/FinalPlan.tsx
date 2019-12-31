@@ -104,7 +104,7 @@ const FinalPlan = () => {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <h6>Nome do exercício</h6>
+                <h6>Descrição do exercício</h6>
               </IonCol>
             </IonRow>
 
@@ -116,7 +116,7 @@ const FinalPlan = () => {
 
             {isDescriptionOK && !description && (
               <IonRow>
-                <IonCol>Nenhum nome foi escolhido</IonCol>
+                <IonCol>Nenhuma descrição escolhida</IonCol>
               </IonRow>
             )}
 
