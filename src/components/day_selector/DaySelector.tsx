@@ -24,6 +24,7 @@ type Props = {
   deleteDate: (date: AppDate) => void;
   editDate: (date: AppDate) => void;
   dates: Array<AppDate>;
+  dayToOpen: string;
 };
 
 const DaySelectorContent: React.FC<Props> = ({
@@ -31,7 +32,8 @@ const DaySelectorContent: React.FC<Props> = ({
   createDate,
   deleteDate,
   editDate,
-  dates
+  dates,
+  dayToOpen
 }) => {
   const isDatesEmpty = dates.length === 0;
 
@@ -64,6 +66,7 @@ const DaySelectorContent: React.FC<Props> = ({
                   deleteCard={() => deleteDate(d)}
                   date={d}
                   editCard={editDate}
+                  open={d.id === dayToOpen}
                 />
               </IonCol>
             </IonRow>

@@ -1,22 +1,20 @@
 import { useReducer } from 'react';
 
+import { useStore } from 'hooks/store';
+
 // Types
 import { Muscle } from 'types/muscles';
 import { ExerciseOption } from 'types/exercises';
 import { AppDate } from 'types/dates';
-import { TrainingError } from 'types/training';
+import { TrainingError, TrainingForm } from 'types/training';
 
 type State = {
   muscles: Array<Muscle>;
   exerciseOptions: Array<ExerciseOption>;
   dates: Array<AppDate>;
   errors: TrainingError;
-};
-
-type Form = {
-  muscles: Array<Muscle>;
-  exerciseOptions: Array<ExerciseOption>;
-  dates: Array<AppDate>;
+  failed: boolean;
+  dayToOpen: string;
 };
 
 type Actions =
@@ -33,13 +31,16 @@ type Actions =
   | { type: 'ADD_DATE'; date: AppDate }
   | { type: 'REMOVE_DATE'; date: AppDate }
   | { type: 'EDIT_DATE'; date: AppDate }
-  | { type: 'SET_ERRORS'; errors: TrainingError };
+  | { type: 'SET_ERRORS'; errors: TrainingError }
+  | { type: 'SET_FAILED'; failed: boolean };
 
 const initialState: State = {
   muscles: [],
   exerciseOptions: [],
   dates: [],
-  errors: {}
+  errors: {},
+  failed: false,
+  dayToOpen: ''
 };
 
 const reducer = (state = initialState, action: Actions): State => {
@@ -87,7 +88,8 @@ const reducer = (state = initialState, action: Actions): State => {
         errors: {
           ...state.errors,
           dates: ''
-        }
+        },
+        dayToOpen: action.date.id
       };
 
     case 'REMOVE_DATE':
@@ -108,12 +110,19 @@ const reducer = (state = initialState, action: Actions): State => {
         errors: action.errors
       };
 
+    case 'SET_FAILED':
+      return {
+        ...state,
+        failed: action.failed
+      };
+
     default:
       return state;
   }
 };
 
 export const useTrainingBuild = () => {
+  const { addTraining } = useStore();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const addMuscle = (muscle: Muscle) =>
@@ -137,7 +146,12 @@ export const useTrainingBuild = () => {
   const setErrors = (errors: TrainingError) =>
     dispatch({ type: 'SET_ERRORS', errors });
 
-  const validate = (form: Form): boolean => {
+  const setFailed = (failed: boolean) =>
+    dispatch({ type: 'SET_FAILED', failed });
+
+  const ignoreFailed = () => setFailed(false);
+
+  const validate = (form: TrainingForm): boolean => {
     const errors: TrainingError = {};
 
     if (form.muscles.length === 0)
@@ -153,15 +167,21 @@ export const useTrainingBuild = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const createTraining = () => {
-    const form: Form = {
-      muscles: state.muscles,
-      exerciseOptions: state.exerciseOptions,
-      dates: state.dates
-    };
+  const createTraining = async () => {
+    try {
+      const form: TrainingForm = {
+        muscles: state.muscles,
+        exerciseOptions: state.exerciseOptions,
+        dates: state.dates
+      };
 
-    // validate state
-    if (validate(form)) {
+      // validate state
+      if (validate(form)) {
+        // await addTraining(form);
+        throw new Error('mamamo');
+      }
+    } catch (err) {
+      setFailed(true);
     }
   };
 
@@ -174,6 +194,7 @@ export const useTrainingBuild = () => {
     removeDate,
     editDate,
     state,
-    createTraining
+    createTraining,
+    ignoreFailed
   };
 };

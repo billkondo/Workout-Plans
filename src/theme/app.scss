@@ -1,0 +1,10 @@
+.scrolling-wrapper {
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.title-font {
+  font-family: 'Patrick Hand', cursive;
+}

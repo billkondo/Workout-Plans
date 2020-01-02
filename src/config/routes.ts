@@ -8,11 +8,18 @@ const routes = {
   training: {
     build: {
       root: '/training/build'
+    },
+    view: {
+      root: '/training/view'
     }
   },
   exercises: {
     build: {
       root: '/exercises/build'
+    },
+    view: {
+      exercise: (id?: string) =>
+        id ? `/exercises/view/${id}` : '/exercises/view/:id'
     }
   }
 };

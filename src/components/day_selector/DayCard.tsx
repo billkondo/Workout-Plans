@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   IonCard,
   IonCardContent,
@@ -21,11 +21,22 @@ type Props = {
   deleteCard: () => void;
   date: AppDate;
   editCard: (date: AppDate) => void;
+  open?: boolean;
 };
 
-const DayCard: React.FC<Props> = ({ deleteCard, date, editCard }) => {
+const DayCard: React.FC<Props> = ({
+  deleteCard,
+  date,
+  editCard,
+  open = false
+}) => {
   const minDate = new Date();
   const maxDate = addMonths(minDate, 24);
+  const dateRef = useRef<HTMLIonDatetimeElement>(null);
+
+  useEffect(() => {
+    if (dateRef && dateRef.current && open) dateRef.current.open();
+  }, [open]);
 
   return (
     <IonCard>
@@ -44,6 +55,7 @@ const DayCard: React.FC<Props> = ({ deleteCard, date, editCard }) => {
           <IonRow>
             <IonCol>
               <IonDatetime
+                ref={dateRef}
                 placeholder="Selecione data"
                 value={date.value}
                 displayFormat="DD MMM YYYY"

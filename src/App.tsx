@@ -4,10 +4,12 @@ import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 // Custom components
-import Home from './pages/Home';
-import Login from './pages/Login';
-import BuildTraining from './pages/build_training/BuildTraining';
+import Home from 'pages/Home';
+import Login from 'pages/Login';
+import BuildTraining from 'pages/build_training/BuildTraining';
 import BuildExercise from 'pages/build_exercise/BuildExercise';
+import ViewTrainings from 'pages/view_trainings/ViewTrainings';
+import ViewExercise from 'pages/view_exercise/ViewExercise';
 
 import { useFirebase } from 'hooks/firebase';
 
@@ -32,6 +34,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import './theme/app.scss';
 
 const App: React.FC = () => {
   useFirebase();
@@ -56,6 +59,16 @@ const App: React.FC = () => {
             exact
             path={routes.exercises.build.root}
             component={BuildExercise}
+          />
+          <Route
+            exact
+            path={routes.training.view.root}
+            component={ViewTrainings}
+          />
+          <Route
+            exact
+            path={routes.exercises.view.exercise()}
+            component={ViewExercise}
           />
         </IonRouterOutlet>
       </IonReactRouter>

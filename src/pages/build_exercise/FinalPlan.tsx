@@ -89,7 +89,7 @@ const FinalPlan = () => {
             {!!title && (
               <IonRow>
                 <IonCol>
-                  <IonText>{title}</IonText>
+                  <IonText className="title-font">{title}</IonText>
                 </IonCol>
               </IonRow>
             )}

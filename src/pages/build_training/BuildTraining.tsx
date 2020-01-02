@@ -10,7 +10,8 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonTitle
+  IonTitle,
+  IonAlert
 } from '@ionic/react';
 import { arrowBack } from 'ionicons/icons';
 import { Divider } from '@material-ui/core';
@@ -43,6 +44,7 @@ interface BuildTrainingContextInterface {
   addDate: (date: AppDate) => void;
   removeDate: (date: AppDate) => void;
   editDate: (date: AppDate) => void;
+  dayToOpen: string;
 
   errors: TrainingError;
 }
@@ -61,7 +63,8 @@ const BuildTraining = () => {
     addDate,
     removeDate,
     editDate,
-    createTraining
+    createTraining,
+    ignoreFailed
   } = useTrainingBuild();
 
   return (
@@ -77,10 +80,17 @@ const BuildTraining = () => {
         editDate,
         removeDate,
         dates: state.dates,
-        errors: state.errors
+        errors: state.errors,
+        dayToOpen: state.dayToOpen
       }}
     >
       <IonPage>
+        <IonAlert
+          isOpen={state.failed}
+          header="Erro"
+          message="Não foi possível criar treino"
+          onDidDismiss={ignoreFailed}
+        ></IonAlert>
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="primary">

@@ -10,9 +10,11 @@ import {
   IonText
 } from '@ionic/react';
 
+import WeekTraining from './WeekTraining';
+
 import routes from 'config/routes';
 
-const Training = () => {
+const Trainings = () => {
   return (
     <IonPage className="ion-padding">
       <IonContent>
@@ -37,7 +39,7 @@ const Training = () => {
               </IonCard>
             </IonCol>
 
-            <IonCol size="6">
+            {/* <IonCol size="6">
               <IonCard>
                 <IonCardContent>
                   <IonGrid>
@@ -51,6 +53,33 @@ const Training = () => {
                   </IonGrid>
                 </IonCardContent>
               </IonCard>
+            </IonCol> */}
+          </IonRow>
+
+          <IonRow>
+            <IonCol>
+              <WeekTraining />
+            </IonCol>
+          </IonRow>
+
+          <IonRow>
+            <IonCol size="6">
+              <IonCard
+                routerDirection="forward"
+                routerLink={routes.training.view.root}
+              >
+                <IonCardContent>
+                  <IonGrid>
+                    <IonRow>
+                      <IonText>Meus</IonText>
+                    </IonRow>
+
+                    <IonRow>
+                      <IonText>Treinos</IonText>
+                    </IonRow>
+                  </IonGrid>
+                </IonCardContent>
+              </IonCard>
             </IonCol>
           </IonRow>
         </IonGrid>
@@ -59,4 +88,4 @@ const Training = () => {
   );
 };
 
-export default Training;
+export default Trainings;

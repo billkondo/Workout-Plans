@@ -17,7 +17,7 @@ const DaySelector = () => {
 
   if (!context) return null;
 
-  const { addDate, dates, editDate, removeDate } = context;
+  const { addDate, dates, editDate, removeDate, dayToOpen } = context;
 
   return (
     <React.Fragment>
@@ -28,6 +28,7 @@ const DaySelector = () => {
           dates={dates}
           editDate={editDate}
           deleteDate={removeDate}
+          dayToOpen={dayToOpen}
         />
       </IonModal>
 

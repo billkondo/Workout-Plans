@@ -7,11 +7,13 @@ import {
   IonChip,
   IonLabel,
   IonTextarea,
-  IonIcon
+  IonIcon,
+  IonRouterLink
 } from '@ionic/react';
 import { Collapse, Grid, Grow } from '@material-ui/core';
 import { eye } from 'ionicons/icons';
 
+import routes from 'config/routes';
 import { Exercise } from 'types/exercises';
 
 type Props = {
@@ -26,7 +28,7 @@ const ExerciseCard: React.FC<Props> = ({ exercise }) => {
   return (
     <IonCard onClick={onCardClick}>
       <IonCardHeader>
-        <IonCardTitle>{exercise.title}</IonCardTitle>
+        <IonCardTitle className="title-font">{exercise.title}</IonCardTitle>
       </IonCardHeader>
 
       <IonCardContent>
@@ -56,7 +58,12 @@ const ExerciseCard: React.FC<Props> = ({ exercise }) => {
           <Grid item container justify="flex-end">
             {
               <Grow in={isSelected}>
-                <IonIcon icon={eye}></IonIcon>
+                <IonRouterLink
+                  routerLink={routes.exercises.view.exercise(exercise.id)}
+                  routerDirection="forward"
+                >
+                  <IonIcon icon={eye}></IonIcon>
+                </IonRouterLink>
               </Grow>
             }
           </Grid>

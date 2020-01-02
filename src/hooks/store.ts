@@ -1,11 +1,14 @@
 import { useFirestore } from 'hooks/firebase';
 import { useAuth } from 'hooks/auth';
 import { useExercisesSetter } from 'hooks/exercises/setter';
+import { useTrainingSetter } from 'hooks/training/setter';
 
 import { ExerciseFields, ExerciseForm, Exercise } from 'types/exercises';
+import { Training, TrainingForm, TrainingFields } from 'types/training';
 
 export const useStore = () => {
   const { addExerciseToState } = useExercisesSetter();
+  const { addTrainingToState } = useTrainingSetter();
   const {
     addExerciseToFirestore,
     getUserExercisesFromFirestore
@@ -38,8 +41,23 @@ export const useStore = () => {
     await getUserExercisesFromFirestore(userID);
   };
 
+  const addTraining = async (form: TrainingForm) => {
+    const training: TrainingFields = {
+      muscles: form.muscles,
+      dates: form.dates,
+      exerciseOptions: form.exerciseOptions,
+      userID: userID
+    };
+
+    addTrainingToState({
+      ...training,
+      id: '1234'
+    });
+  };
+
   return {
     addExercise,
-    getUserExercises
+    getUserExercises,
+    addTraining
   };
 };

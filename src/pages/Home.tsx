@@ -12,7 +12,7 @@ import { calendar, bicycle } from 'ionicons/icons';
 
 import routes from 'config/routes';
 
-import Training from 'pages/Training';
+import Training from 'pages/trainings/Trainings';
 import Exercices from 'pages/exercises/Exercises';
 
 const Home: React.FC = () => {
