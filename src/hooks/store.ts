@@ -1,14 +1,17 @@
 import { useFirestore } from 'hooks/firebase';
 import { useAuth } from 'hooks/auth';
 import { useExercisesSetter } from 'hooks/exercises/setter';
-import { useTrainingSetter } from 'hooks/training/setter';
+import { useTrainingsSetter } from 'hooks/trainings/setter';
+
+// ! temporary
+import uuidv4 from 'uuid/v4';
 
 import { ExerciseFields, ExerciseForm, Exercise } from 'types/exercises';
 import { Training, TrainingForm, TrainingFields } from 'types/training';
 
 export const useStore = () => {
   const { addExerciseToState } = useExercisesSetter();
-  const { addTrainingToState } = useTrainingSetter();
+  const { addTrainingToState } = useTrainingsSetter();
   const {
     addExerciseToFirestore,
     getUserExercisesFromFirestore
@@ -51,7 +54,7 @@ export const useStore = () => {
 
     addTrainingToState({
       ...training,
-      id: '1234'
+      id: uuidv4()
     });
   };
 

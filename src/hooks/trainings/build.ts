@@ -121,7 +121,7 @@ const reducer = (state = initialState, action: Actions): State => {
   }
 };
 
-export const useTrainingBuild = () => {
+export const useTrainingsBuild = () => {
   const { addTraining } = useStore();
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -177,8 +177,7 @@ export const useTrainingBuild = () => {
 
       // validate state
       if (validate(form)) {
-        // await addTraining(form);
-        throw new Error('mamamo');
+        await addTraining(form);
       }
     } catch (err) {
       setFailed(true);

@@ -33,17 +33,17 @@ const ExerciseCard: React.FC<Props> = ({ exercise }) => {
 
       <IonCardContent>
         <Grid container direction="column" spacing={2}>
-          <Grid item container>
-            {!!exercise.description && (
-              <Collapse in={isSelected}>
+          {!!exercise.description && (
+            <Collapse in={isSelected}>
+              <Grid item container>
                 <IonTextarea
                   value={exercise.description}
                   readonly
                   autoGrow={true}
                 />
-              </Collapse>
-            )}
-          </Grid>
+              </Grid>
+            </Collapse>
+          )}
 
           <Grid item container>
             {exercise.muscles.map(m => {

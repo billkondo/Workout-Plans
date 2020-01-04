@@ -24,7 +24,7 @@ import ExercisesSelector from './ExercisesSelector';
 import DaySelector from './DaySelector';
 import FinalPlan from './FinalPlan';
 
-import { useTrainingBuild } from 'hooks/training/build';
+import { useTrainingsBuild } from 'hooks/trainings/build';
 
 import { Muscle } from 'types/muscles';
 import { ExerciseOption } from 'types/exercises';
@@ -65,7 +65,7 @@ const BuildTraining = () => {
     editDate,
     createTraining,
     ignoreFailed
-  } = useTrainingBuild();
+  } = useTrainingsBuild();
 
   return (
     <BuildTrainingContext.Provider
@@ -91,35 +91,37 @@ const BuildTraining = () => {
           message="Não foi possível criar treino"
           onDidDismiss={ignoreFailed}
         ></IonAlert>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="primary">
-              <IonButton
-                routerLink={routes.home.training}
-                routerDirection="back"
-              >
-                <IonIcon icon={arrowBack}></IonIcon>
-              </IonButton>
-            </IonButtons>
 
-            <IonTitle>Montando treino</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent className="ion-padding">
+        <IonContent>
+          <IonHeader>
+            <IonToolbar>
+              <IonButtons slot="primary">
+                <IonButton
+                  routerLink={routes.home.training}
+                  routerDirection="back"
+                >
+                  <IonIcon icon={arrowBack}></IonIcon>
+                </IonButton>
+              </IonButtons>
+
+              <IonTitle className="header-font">Montando treino</IonTitle>
+            </IonToolbar>
+          </IonHeader>
+
           <IonGrid>
-            <IonRow>
+            <IonRow className="ion-padding">
               <IonCol>
                 <MuscleSelector />
               </IonCol>
             </IonRow>
 
-            <IonRow>
+            <IonRow className="ion-padding">
               <IonCol>
                 <ExercisesSelector />
               </IonCol>
             </IonRow>
 
-            <IonRow>
+            <IonRow className="ion-padding">
               <IonCol>
                 <DaySelector />
               </IonCol>

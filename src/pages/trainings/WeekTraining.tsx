@@ -7,7 +7,7 @@ const WeekTraining = () => {
   return (
     <Grid container direction="column">
       <Grid item container justify="center">
-        <h5> Treinos da Semana </h5>
+        <h5 className="header-font"> Treinos da Semana </h5>
       </Grid>
 
       <Grid item container>

@@ -14,7 +14,7 @@ const MyExercises = () => {
     <IonGrid>
       <IonRow>
         <IonCol>
-          <h3 className="ion-text-center">Meus exercícios</h3>
+          <h3 className="ion-text-center header-font">Meus exercícios</h3>
         </IonCol>
       </IonRow>
 

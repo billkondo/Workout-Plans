@@ -87,29 +87,30 @@ const BuildExercise: React.FC<Props> = ({ history }) => {
           message="Não foi possível criar o exercício"
         ></IonAlert>
 
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="primary">
-              <IonButton
-                routerLink={routes.home.exercises}
-                routerDirection="back"
-              >
-                <IonIcon icon={arrowBack}></IonIcon>
-              </IonButton>
-            </IonButtons>
-
-            <IonTitle>Montando exercício</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <IonContent>
-          <IonGrid className="ion-padding">
-            <IonRow>
+          <IonHeader>
+            <IonToolbar>
+              <IonButtons slot="primary">
+                <IonButton
+                  routerLink={routes.home.exercises}
+                  routerDirection="back"
+                >
+                  <IonIcon icon={arrowBack}></IonIcon>
+                </IonButton>
+              </IonButtons>
+
+              <IonTitle className="header-font">Montando exercício</IonTitle>
+            </IonToolbar>
+          </IonHeader>
+
+          <IonGrid>
+            <IonRow className="ion-padding">
               <IonCol>
                 <MuscleSelector />
               </IonCol>
             </IonRow>
 
-            <IonRow>
+            <IonRow className="ion-padding">
               <IonCol>
                 <TextSelector />
               </IonCol>

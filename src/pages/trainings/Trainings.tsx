@@ -16,7 +16,7 @@ import routes from 'config/routes';
 
 const Trainings = () => {
   return (
-    <IonPage className="ion-padding">
+    <IonPage>
       <IonContent>
         <IonGrid>
           <IonRow>

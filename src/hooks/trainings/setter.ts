@@ -5,7 +5,7 @@ import { actions } from 'state';
 
 import { Training } from 'types/training';
 
-export const useTrainingSetter = () => {
+export const useTrainingsSetter = () => {
   const dispatch = useDispatch();
 
   const addTrainingToState = useCallback(

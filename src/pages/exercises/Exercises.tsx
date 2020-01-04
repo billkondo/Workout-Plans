@@ -17,7 +17,7 @@ import MyExercises from './MyExercises';
 const Exercises = () => {
   return (
     <IonPage>
-      <IonContent className="ion-padding">
+      <IonContent>
         <IonGrid>
           <IonRow>
             <IonCol size="6">

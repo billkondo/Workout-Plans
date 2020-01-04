@@ -9,7 +9,7 @@ import {
   IonAlert
 } from '@ionic/react';
 import { InputChangeEventDetail } from '@ionic/core';
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect, useCallback } from 'react';
 import { History } from 'history';
 
 import Center from 'components/center/Center';
@@ -104,7 +104,7 @@ const Login: React.FC<Props> = ({ history }) => {
     return !errors.email && !errors.password;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     try {
       const form = {
         email: state.email,
@@ -122,7 +122,19 @@ const Login: React.FC<Props> = ({ history }) => {
       console.log(err);
       setErrorAlert(true);
     }
-  };
+  }, [history, login, state.email, state.password]);
+
+  useEffect(() => {
+    const handleSubmitOnEnter = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') handleSubmit();
+    };
+
+    document.addEventListener('keypress', handleSubmitOnEnter);
+
+    return () => {
+      document.removeEventListener('keypress', handleSubmitOnEnter);
+    };
+  }, [handleSubmit]);
 
   return (
     <IonPage>

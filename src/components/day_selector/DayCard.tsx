@@ -13,7 +13,7 @@ import {
   IonDatetime
 } from '@ionic/react';
 import { trash } from 'ionicons/icons';
-import { addMonths } from 'date-fns';
+import { addMonths, subMonths } from 'date-fns';
 
 import { AppDate } from 'types/dates';
 
@@ -30,7 +30,7 @@ const DayCard: React.FC<Props> = ({
   editCard,
   open = false
 }) => {
-  const minDate = new Date();
+  const minDate = subMonths(new Date(), 12);
   const maxDate = addMonths(minDate, 24);
   const dateRef = useRef<HTMLIonDatetimeElement>(null);
 

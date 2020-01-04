@@ -1,3 +1,5 @@
+import { localStorage } from 'storage';
+
 import { Training } from 'types/training';
 
 const ADD_TRAINING = 'ADD_TRAINING';
@@ -13,7 +15,8 @@ type AddTrainingAction = {
 
 type Action = AddTrainingAction;
 
-const initialState: State = {
+// ! temporary
+const initialState: State = localStorage().find('trainings') || {
   trainings: []
 };
 

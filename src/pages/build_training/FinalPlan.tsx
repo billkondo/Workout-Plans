@@ -20,7 +20,7 @@ const FinalPlan = () => {
     <IonGrid>
       <IonRow>
         <IonCol>
-          <h3 className="ion-text-center">Treino final</h3>
+          <h3 className="ion-text-center header-font  ">Treino final</h3>
         </IonCol>
       </IonRow>
 
