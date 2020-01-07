@@ -25,12 +25,15 @@ export type Exercise = {
   createdTime?: Timestamp;
 };
 
+export type ExerciseInfo = {
+  sets: number;
+  reps: [number, number];
+  restInterval: [number, number];
+};
+
 export type ExerciseOption = {
   exercise: Exercise;
-  sets?: number;
-  reps?: number;
-  restInterval?: number;
-  id: string;
+  info: ExerciseInfo;
 };
 
 export type ExerciseError = {

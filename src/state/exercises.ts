@@ -1,3 +1,5 @@
+import { localStorage } from 'storage';
+
 import { Exercise } from 'types/exercises';
 
 import routes from 'config/routes';
@@ -16,15 +18,9 @@ type AddExerciseAction = {
 
 type Action = AddExerciseAction;
 
-const initialState: State = {
-  exercises: [
-    {
-      id: '1234',
-      muscles: [],
-      title: 'agachamento livre',
-      userID: '341234'
-    }
-  ],
+// ! temporary
+const initialState: State = localStorage().find('exercises') || {
+  exercises: [],
   backRoute: routes.home.exercises
 };
 

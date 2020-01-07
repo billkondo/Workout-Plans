@@ -81,7 +81,7 @@ const FinalPlan = () => {
 
             {exerciseOptions.map(e => {
               return (
-                <IonChip key={e.id}>
+                <IonChip key={e.exercise.id}>
                   <IonLabel>{e.exercise.title}</IonLabel>
                 </IonChip>
               );

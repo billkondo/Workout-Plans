@@ -4,7 +4,7 @@ import { useStore } from 'hooks/store';
 
 // Types
 import { Muscle } from 'types/muscles';
-import { ExerciseOption } from 'types/exercises';
+import { ExerciseOption, Exercise } from 'types/exercises';
 import { AppDate } from 'types/dates';
 import { TrainingError, TrainingForm } from 'types/training';
 
@@ -27,12 +27,18 @@ type Actions =
       muscle: Muscle;
     }
   | { type: 'ADD_EXERCISE_OPTION'; exerciseOption: ExerciseOption }
-  | { type: 'REMOVE_EXERCISE_OPTION'; exerciseOption: ExerciseOption }
+  | { type: 'REMOVE_EXERCISE_OPTION'; exercise: Exercise }
   | { type: 'ADD_DATE'; date: AppDate }
   | { type: 'REMOVE_DATE'; date: AppDate }
   | { type: 'EDIT_DATE'; date: AppDate }
   | { type: 'SET_ERRORS'; errors: TrainingError }
-  | { type: 'SET_FAILED'; failed: boolean };
+  | { type: 'SET_FAILED'; failed: boolean }
+  | {
+      type: 'EDIT_EXERCISE_OPTION_INFO';
+      key: string;
+      value: number | number[];
+      exercise: Exercise;
+    };
 
 const initialState: State = {
   muscles: [],
@@ -77,7 +83,23 @@ const reducer = (state = initialState, action: Actions): State => {
       return {
         ...state,
         exerciseOptions: state.exerciseOptions.filter(
-          exerciseOption => exerciseOption.id !== action.exerciseOption.id
+          exerciseOption => exerciseOption.exercise.id !== action.exercise.id
+        )
+      };
+
+    case 'EDIT_EXERCISE_OPTION_INFO':
+      return {
+        ...state,
+        exerciseOptions: state.exerciseOptions.map(e =>
+          e.exercise.id === action.exercise.id
+            ? {
+                ...e,
+                info: {
+                  ...e.info,
+                  [action.key]: action.value
+                }
+              }
+            : e
         )
       };
 
@@ -131,17 +153,33 @@ export const useTrainingsBuild = () => {
   const removeMuscle = (muscle: Muscle) =>
     dispatch({ type: 'REMOVE_MUSCLE', muscle });
 
-  const addExerciseOption = (exerciseOption: ExerciseOption) =>
-    dispatch({ type: 'ADD_EXERCISE_OPTION', exerciseOption });
+  const addExerciseOption = (exercise: Exercise) =>
+    dispatch({
+      type: 'ADD_EXERCISE_OPTION',
+      exerciseOption: {
+        exercise,
+        info: {
+          sets: 0,
+          reps: [0, 20],
+          restInterval: [0, 30]
+        }
+      }
+    });
 
-  const removeExerciseOption = (exerciseOption: ExerciseOption) =>
-    dispatch({ type: 'REMOVE_EXERCISE_OPTION', exerciseOption });
+  const removeExerciseOption = (exercise: Exercise) =>
+    dispatch({ type: 'REMOVE_EXERCISE_OPTION', exercise });
 
   const addDate = (date: AppDate) => dispatch({ type: 'ADD_DATE', date });
 
   const removeDate = (date: AppDate) => dispatch({ type: 'REMOVE_DATE', date });
 
   const editDate = (date: AppDate) => dispatch({ type: 'EDIT_DATE', date });
+
+  const editExerciseOptionInfo = (
+    key: string,
+    value: number | number[],
+    exercise: Exercise
+  ) => dispatch({ type: 'EDIT_EXERCISE_OPTION_INFO', key, value, exercise });
 
   const setErrors = (errors: TrainingError) =>
     dispatch({ type: 'SET_ERRORS', errors });
@@ -167,7 +205,7 @@ export const useTrainingsBuild = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const createTraining = async () => {
+  const createTraining = async (): Promise<boolean> => {
     try {
       const form: TrainingForm = {
         muscles: state.muscles,
@@ -178,9 +216,13 @@ export const useTrainingsBuild = () => {
       // validate state
       if (validate(form)) {
         await addTraining(form);
+        return true;
       }
+
+      return false;
     } catch (err) {
       setFailed(true);
+      return false;
     }
   };
 
@@ -189,6 +231,7 @@ export const useTrainingsBuild = () => {
     removeMuscle,
     addExerciseOption,
     removeExerciseOption,
+    editExerciseOptionInfo,
     addDate,
     removeDate,
     editDate,

@@ -11,23 +11,46 @@ import {
   IonChip,
   IonLabel
 } from '@ionic/react';
+import { Collapse } from '@material-ui/core';
 
 import CheckComponent from 'components/check/Check';
-import { ExerciseOption } from 'types/exercises';
+import Range from 'components/input/Range';
+import { ExerciseOption, Exercise, ExerciseInfo } from 'types/exercises';
 
 type Props = {
-  exerciseOption: ExerciseOption;
-  isSelected: boolean;
-  selectExerciseOption: (exerciseOption: ExerciseOption) => void;
-  unselectExerciseOption: (exerciseOption: ExerciseOption) => void;
+  exercise: Exercise;
+
+  selectExerciseOption: (exercise: Exercise) => void;
+  unselectExerciseOption: (exercise: Exercise) => void;
+  exerciseOption?: ExerciseOption;
+
+  editOption: (
+    key: string,
+    value: number | number[],
+    exercise: Exercise
+  ) => void;
 };
 
 const ExerciseCard: React.FC<Props> = ({
-  exerciseOption,
-  isSelected,
+  exercise,
   selectExerciseOption,
-  unselectExerciseOption
+  unselectExerciseOption,
+  exerciseOption,
+  editOption
 }) => {
+  const isSelected = !!exerciseOption;
+
+  const info: ExerciseInfo = exerciseOption
+    ? exerciseOption.info
+    : {
+        reps: [0, 30],
+        restInterval: [0, 30],
+        sets: 30
+      };
+
+  const handleChange = (key: string) => (newValue: number | number[]) =>
+    editOption(key, newValue, exercise);
+
   return (
     <IonCard>
       <IonCardHeader className="ion-padding">
@@ -38,16 +61,14 @@ const ExerciseCard: React.FC<Props> = ({
                 <IonRow className="ion-align-items-center">
                   <div style={{ position: 'absolute', zIndex: 999 }}>
                     <CheckComponent
-                      handleCheck={() => selectExerciseOption(exerciseOption)}
-                      handleUncheck={() =>
-                        unselectExerciseOption(exerciseOption)
-                      }
+                      handleCheck={() => selectExerciseOption(exercise)}
+                      handleUncheck={() => unselectExerciseOption(exercise)}
                       isSelected={isSelected}
                     />
                   </div>
                   <IonCol>
                     <IonCardTitle style={{ marginLeft: 40 }}>
-                      {exerciseOption.exercise.title}
+                      {exercise.title}
                     </IonCardTitle>
                   </IonCol>
                 </IonRow>
@@ -57,10 +78,8 @@ const ExerciseCard: React.FC<Props> = ({
 
           <IonRow style={{ marginTop: 16 }}>
             <IonCol>
-              {exerciseOption.exercise.description && (
-                <IonCardSubtitle>
-                  {exerciseOption.exercise.description}
-                </IonCardSubtitle>
+              {exercise.description && (
+                <IonCardSubtitle>{exercise.description}</IonCardSubtitle>
               )}
             </IonCol>
           </IonRow>
@@ -68,14 +87,58 @@ const ExerciseCard: React.FC<Props> = ({
       </IonCardHeader>
 
       <IonCardContent className="ion-padding">
-        {exerciseOption.exercise.muscles &&
-          exerciseOption.exercise.muscles.map(muscle => {
-            return (
-              <IonChip key={muscle.type}>
-                <IonLabel>{muscle.label}</IonLabel>
-              </IonChip>
-            );
-          })}
+        <IonGrid style={{ padding: 0 }}>
+          <IonRow>
+            <IonCol style={{ padding: 0 }}>
+              {exercise.muscles &&
+                exercise.muscles.map(muscle => {
+                  return (
+                    <IonChip key={muscle.type}>
+                      <IonLabel>{muscle.label}</IonLabel>
+                    </IonChip>
+                  );
+                })}
+            </IonCol>
+          </IonRow>
+
+          <IonRow style={{ marginTop: 32 }}>
+            <IonCol>
+              <Collapse in={isSelected}>
+                <IonGrid>
+                  <IonRow>
+                    <IonCol>
+                      <Range
+                        label="Séries"
+                        value={info.sets}
+                        handleChange={handleChange('sets')}
+                      />
+                    </IonCol>
+                  </IonRow>
+
+                  <IonRow style={{ marginTop: 24 }}>
+                    <IonCol>
+                      <Range
+                        label="Repetições"
+                        value={info.reps}
+                        handleChange={handleChange('reps')}
+                      />
+                    </IonCol>
+                  </IonRow>
+
+                  <IonRow style={{ marginTop: 24 }}>
+                    <IonCol>
+                      <Range
+                        label="Tempo de descanso"
+                        value={info.restInterval}
+                        handleChange={handleChange('restInterval')}
+                      />
+                    </IonCol>
+                  </IonRow>
+                </IonGrid>
+              </Collapse>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
       </IonCardContent>
     </IonCard>
   );

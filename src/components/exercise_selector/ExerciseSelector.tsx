@@ -2,46 +2,50 @@ import React from 'react';
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
 
 import ExerciseCard from './ExerciseCard';
-import { muscles } from 'types/muscles';
-import { ExerciseOption } from 'types/exercises';
+
+import { ExerciseOption, Exercise } from 'types/exercises';
+
+import { useExercisesGetter } from 'hooks/exercises/getter';
 
 type Props = {
-  selectExerciseOption: (exerciseOption: ExerciseOption) => void;
-  unselectExerciseOption: (exerciseOption: ExerciseOption) => void;
+  selectExerciseOption: (exercise: Exercise) => void;
+  unselectExerciseOption: (exercise: Exercise) => void;
   selectedExercisesOptions: Array<ExerciseOption>;
-};
-
-const E = {
-  exercise: {
-    title: 'Pull Over',
-    description: 'Exercício para costas',
-    muscles: [muscles.chest, muscles.back, muscles.lats],
-    id: '1',
-    userID: '3413'
-  },
-  id: '1'
+  editOption: (
+    key: string,
+    value: number | number[],
+    exercise: Exercise
+  ) => void;
 };
 
 const ExerciseSelector: React.FC<Props> = ({
   selectExerciseOption,
   unselectExerciseOption,
-  selectedExercisesOptions
+  selectedExercisesOptions,
+  editOption
 }) => {
-  const isExerciseOptionSelected = (exerciseOption: ExerciseOption) =>
-    !!selectedExercisesOptions.find(e => e.id === exerciseOption.id);
+  const { exercises } = useExercisesGetter();
+
+  const findExerciseOption = (exercise: Exercise) =>
+    selectedExercisesOptions.find(e => e.exercise.id === exercise.id);
 
   return (
     <IonGrid>
-      <IonRow>
-        <IonCol>
-          <ExerciseCard
-            selectExerciseOption={selectExerciseOption}
-            unselectExerciseOption={unselectExerciseOption}
-            exerciseOption={E}
-            isSelected={isExerciseOptionSelected(E)}
-          />
-        </IonCol>
-      </IonRow>
+      {exercises.map(e => {
+        return (
+          <IonRow key={e.id}>
+            <IonCol>
+              <ExerciseCard
+                selectExerciseOption={selectExerciseOption}
+                unselectExerciseOption={unselectExerciseOption}
+                exercise={e}
+                exerciseOption={findExerciseOption(e)}
+                editOption={editOption}
+              />
+            </IonCol>
+          </IonRow>
+        );
+      })}
     </IonGrid>
   );
 };

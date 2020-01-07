@@ -13,6 +13,7 @@ import ViewExercise from 'pages/view_exercise/ViewExercise';
 
 import { useFirebase } from 'hooks/firebase';
 import { useTrainingsPersistence } from 'hooks/trainings/persistence';
+import { useExercisesPersistence } from 'hooks/exercises/persistence';
 
 // Config files
 import routes from 'config/routes'; // URL definitions
@@ -40,6 +41,7 @@ import './theme/app.scss';
 const App: React.FC = () => {
   useFirebase();
   useTrainingsPersistence();
+  useExercisesPersistence();
 
   return (
     <IonApp>

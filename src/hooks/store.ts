@@ -30,7 +30,7 @@ export const useStore = () => {
     // const doc = await addExerciseToFirestore(exercise);
 
     addExerciseToState({
-      id: '1341324',
+      id: uuidv4(),
       title: exercise.title,
       description: exercise.description,
       userID: exercise.userID,
