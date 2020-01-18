@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   IonGrid,
   IonRow,
@@ -9,11 +9,7 @@ import {
   IonToolbar,
   IonButtons,
   IonButton,
-  IonIcon,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle
+  IonIcon
 } from '@ionic/react';
 import { close } from 'ionicons/icons';
 
@@ -26,7 +22,9 @@ type Props = {
   unselectMuscle: (muscle: Muscle) => void;
   muscleOptions: Array<MuscleOption>;
   selectedMuscles: Array<Muscle>;
-  description?: string;
+
+  isOpen: boolean;
+  closeSelector: () => void;
 };
 
 const MuscleSelector: React.FC<Props> = ({
@@ -34,58 +32,44 @@ const MuscleSelector: React.FC<Props> = ({
   selectMuscle,
   selectedMuscles,
   unselectMuscle,
-  description
+  isOpen,
+  closeSelector
 }) => {
-  const [isOpen, setOpen] = useState(false);
-
   return (
-    <React.Fragment>
-      <IonModal isOpen={isOpen} onDidDismiss={() => setOpen(false)}>
-        <IonContent>
-          <IonHeader>
-            <IonToolbar>
-              <IonButtons slot="end">
-                <IonButton onClick={() => setOpen(false)}>
-                  <IonIcon icon={close}></IonIcon>
-                </IonButton>
-              </IonButtons>
-            </IonToolbar>
-          </IonHeader>
+    <IonModal isOpen={isOpen} onDidDismiss={closeSelector}>
+      <IonContent>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="end">
+              <IonButton onClick={closeSelector}>
+                <IonIcon icon={close}></IonIcon>
+              </IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
 
-          <IonGrid class="ion-padding">
-            <IonRow>
-              <IonGrid>
-                {muscleOptions.map(option => {
-                  return (
-                    <IonRow key={option.muscle.type}>
-                      <IonCol>
-                        <MuscleCard
-                          muscleOption={option}
-                          selectedMuscles={selectedMuscles}
-                          selectMuscle={selectMuscle}
-                          unselectMuscle={unselectMuscle}
-                        />
-                      </IonCol>
-                    </IonRow>
-                  );
-                })}
-              </IonGrid>
-            </IonRow>
-          </IonGrid>
-        </IonContent>
-      </IonModal>
-
-      <IonCard onClick={() => setOpen(true)}>
-        <IonCardHeader>
-          <IonCardTitle className="ion-padding">
-            Escolher grupos musculares
-          </IonCardTitle>
-          <IonCardSubtitle className="ion-padding">
-            {!!description ? description : ' Quais músculos seu treino focará'}
-          </IonCardSubtitle>
-        </IonCardHeader>
-      </IonCard>
-    </React.Fragment>
+        <IonGrid class="ion-padding">
+          <IonRow>
+            <IonGrid>
+              {muscleOptions.map(option => {
+                return (
+                  <IonRow key={option.muscle.type}>
+                    <IonCol>
+                      <MuscleCard
+                        muscleOption={option}
+                        selectedMuscles={selectedMuscles}
+                        selectMuscle={selectMuscle}
+                        unselectMuscle={unselectMuscle}
+                      />
+                    </IonCol>
+                  </IonRow>
+                );
+              })}
+            </IonGrid>
+          </IonRow>
+        </IonGrid>
+      </IonContent>
+    </IonModal>
   );
 };
 

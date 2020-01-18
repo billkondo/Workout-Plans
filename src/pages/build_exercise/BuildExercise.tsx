@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   IonPage,
   IonContent,
@@ -15,9 +15,6 @@ import {
 } from '@ionic/react';
 import { arrowBack } from 'ionicons/icons';
 import { Divider } from '@material-ui/core';
-import { History } from 'history';
-
-import routes from 'config/routes';
 
 import MuscleSelector from './MuscleSelector';
 import TextSelector from './TextSelector';
@@ -45,11 +42,7 @@ export const BuildExerciseContext = React.createContext<BuildExerciseContextInte
   null
 );
 
-type Props = {
-  history: History;
-};
-
-const BuildExercise: React.FC<Props> = ({ history }) => {
+const BuildExercise = () => {
   const {
     addMuscle,
     removeMuscle,
@@ -59,11 +52,12 @@ const BuildExercise: React.FC<Props> = ({ history }) => {
     ignoreFailed
   } = useExerciseBuild();
   const { backRoute } = useExercisesGetter();
+  const goBackButton = useRef<HTMLIonButtonElement>(null);
 
   const create = async () => {
     if (await createExercise()) {
       // Change routes
-      history.push(backRoute);
+      if (goBackButton && goBackButton.current) goBackButton.current.click();
     }
   };
 
@@ -92,8 +86,9 @@ const BuildExercise: React.FC<Props> = ({ history }) => {
             <IonToolbar>
               <IonButtons slot="primary">
                 <IonButton
-                  routerLink={routes.home.exercises}
+                  routerLink={backRoute}
                   routerDirection="back"
+                  ref={goBackButton}
                 >
                   <IonIcon icon={arrowBack}></IonIcon>
                 </IonButton>

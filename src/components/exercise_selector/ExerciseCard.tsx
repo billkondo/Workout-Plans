@@ -24,7 +24,7 @@ type Props = {
   unselectExerciseOption: (exercise: Exercise) => void;
   exerciseOption?: ExerciseOption;
 
-  editOption: (
+  editOption?: (
     key: string,
     value: number | number[],
     exercise: Exercise
@@ -48,8 +48,9 @@ const ExerciseCard: React.FC<Props> = ({
         sets: 30
       };
 
-  const handleChange = (key: string) => (newValue: number | number[]) =>
-    editOption(key, newValue, exercise);
+  const handleChange = (key: string) => (newValue: number | number[]) => {
+    if (!!editOption) editOption(key, newValue, exercise);
+  };
 
   return (
     <IonCard>
@@ -103,7 +104,7 @@ const ExerciseCard: React.FC<Props> = ({
 
           <IonRow style={{ marginTop: 32 }}>
             <IonCol>
-              <Collapse in={isSelected}>
+              <Collapse in={isSelected && !!editOption}>
                 <IonGrid>
                   <IonRow>
                     <IonCol>

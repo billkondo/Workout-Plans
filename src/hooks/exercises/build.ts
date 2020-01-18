@@ -123,7 +123,6 @@ export const useExerciseBuild = () => {
 
       if (validate(form)) {
         await addExercise(form);
-        reset();
         return true;
       }
 
@@ -140,6 +139,7 @@ export const useExerciseBuild = () => {
     removeMuscle,
     changeText,
     createExercise,
-    ignoreFailed
+    ignoreFailed,
+    reset
   };
 };

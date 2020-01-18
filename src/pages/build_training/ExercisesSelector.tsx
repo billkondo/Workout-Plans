@@ -3,18 +3,8 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardSubtitle,
-  IonModal,
-  IonContent,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  IonIcon,
-  IonGrid,
-  IonRow
+  IonCardSubtitle
 } from '@ionic/react';
-import { close } from 'ionicons/icons';
 
 import ExerciseSelectorComponent from 'components/exercise_selector/ExerciseSelector';
 import { BuildTrainingContext } from './BuildTraining';
@@ -40,30 +30,14 @@ const ExerciesSelector = () => {
 
   return (
     <React.Fragment>
-      <IonModal isOpen={isOpen} onDidDismiss={() => setOpen(false)}>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="end">
-              <IonButton onClick={() => setOpen(false)}>
-                <IonIcon icon={close}></IonIcon>
-              </IonButton>
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
-
-        <IonContent>
-          <IonGrid class="ion-padding">
-            <IonRow>
-              <ExerciseSelectorComponent
-                selectedExercisesOptions={context.exerciseOptions}
-                selectExerciseOption={selectExerciseOption}
-                unselectExerciseOption={unselectExerciseOption}
-                editOption={editOption}
-              />
-            </IonRow>
-          </IonGrid>
-        </IonContent>
-      </IonModal>
+      <ExerciseSelectorComponent
+        selectedExercisesOptions={context.exerciseOptions}
+        selectExerciseOption={selectExerciseOption}
+        unselectExerciseOption={unselectExerciseOption}
+        editOption={editOption}
+        isOpen={isOpen}
+        closeSelector={() => setOpen(false)}
+      />
 
       <IonCard onClick={() => setOpen(true)}>
         <IonCardHeader>

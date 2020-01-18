@@ -8,19 +8,24 @@ type State = {
   trainings: Array<Training>;
 };
 
-type AddTrainingAction = {
-  type: typeof ADD_TRAINING;
-  training: Training;
-};
-
-type Action = AddTrainingAction;
-
 // ! temporary
 const initialState: State = localStorage().find('trainings') || {
   trainings: []
 };
 
-const reducer = (state = initialState, action: Action): State => {
+type Actions = {
+  type: 'ADD_TRAINING';
+  training: Training;
+};
+
+const actions = {
+  addTraining: (training: Training): Actions => ({
+    type: ADD_TRAINING,
+    training
+  })
+};
+
+const reducer = (state = initialState, action: Actions): State => {
   switch (action.type) {
     case 'ADD_TRAINING':
       return {
@@ -31,13 +36,6 @@ const reducer = (state = initialState, action: Action): State => {
     default:
       return state;
   }
-};
-
-const actions = {
-  addTraining: (training: Training): AddTrainingAction => ({
-    type: ADD_TRAINING,
-    training
-  })
 };
 
 export default { reducer, actions };

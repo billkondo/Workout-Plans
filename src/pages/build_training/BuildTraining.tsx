@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   IonPage,
   IonContent,
@@ -15,7 +15,6 @@ import {
 } from '@ionic/react';
 import { arrowBack } from 'ionicons/icons';
 import { Divider } from '@material-ui/core';
-import { History } from 'history';
 
 import routes from 'config/routes';
 
@@ -59,11 +58,7 @@ export const BuildTrainingContext = React.createContext<BuildTrainingContextInte
   null
 );
 
-type Props = {
-  history: History;
-};
-
-const BuildTraining: React.FC<Props> = ({ history }) => {
+const BuildTraining = () => {
   const {
     state,
     addMuscle,
@@ -77,10 +72,11 @@ const BuildTraining: React.FC<Props> = ({ history }) => {
     createTraining,
     ignoreFailed
   } = useTrainingsBuild();
+  const goBackButton = useRef<HTMLIonButtonElement>(null);
 
   const create = async () => {
     if (await createTraining()) {
-      history.push(routes.home.training);
+      if (goBackButton && goBackButton.current) goBackButton.current.click();
     }
   };
 
@@ -117,6 +113,7 @@ const BuildTraining: React.FC<Props> = ({ history }) => {
                 <IonButton
                   routerLink={routes.home.training}
                   routerDirection="back"
+                  ref={goBackButton}
                 >
                   <IonIcon icon={arrowBack}></IonIcon>
                 </IonButton>

@@ -11,6 +11,9 @@ const routes = {
     },
     view: {
       root: '/training/view'
+    },
+    filters: {
+      root: '/training/filters'
     }
   },
   exercises: {
