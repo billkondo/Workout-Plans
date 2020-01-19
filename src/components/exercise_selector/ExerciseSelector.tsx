@@ -9,7 +9,8 @@ import {
   IonToolbar,
   IonButtons,
   IonButton,
-  IonIcon
+  IonIcon,
+  IonSearchbar
 } from '@ionic/react';
 import { close } from 'ionicons/icons';
 
@@ -18,6 +19,7 @@ import ExerciseCard from './ExerciseCard';
 import { ExerciseOption, Exercise } from 'types/exercises';
 
 import { useExercisesGetter } from 'hooks/exercises/getter';
+import { useExercisesSearch } from 'hooks/exercises/search';
 
 type Props = {
   isOpen: boolean;
@@ -41,6 +43,7 @@ const ExerciseSelector: React.FC<Props> = ({
   closeSelector
 }) => {
   const { exercises } = useExercisesGetter();
+  const { search, filteredExercises } = useExercisesSearch({ exercises });
 
   const findExerciseOption = (exercise: Exercise) =>
     selectedExercisesOptions.find(e => e.exercise.id === exercise.id);
@@ -57,9 +60,22 @@ const ExerciseSelector: React.FC<Props> = ({
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
+      <IonContent className="ion-padding">
         <IonGrid>
-          {exercises.map(e => {
+          <IonRow>
+            <IonCol>
+              <IonSearchbar
+                placeholder="Pesquisar"
+                onIonChange={e => {
+                  if (e.target !== null) {
+                    const target = e.target as HTMLInputElement;
+                    search(target.value);
+                  }
+                }}
+              ></IonSearchbar>
+            </IonCol>
+          </IonRow>
+          {filteredExercises.map(e => {
             return (
               <IonRow key={e.id}>
                 <IonCol>

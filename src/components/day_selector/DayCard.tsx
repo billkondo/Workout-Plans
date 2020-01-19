@@ -40,7 +40,7 @@ const DayCard: React.FC<Props> = ({
 
   return (
     <IonCard>
-      <IonCardHeader>
+      <IonCardHeader style={{ padding: 0 }}>
         <IonToolbar>
           <IonButtons slot="end">
             <IonButton onClick={deleteCard}>
@@ -50,10 +50,10 @@ const DayCard: React.FC<Props> = ({
         </IonToolbar>
       </IonCardHeader>
 
-      <IonCardContent>
-        <IonGrid>
+      <IonCardContent style={{ padding: 0 }}>
+        <IonGrid style={{ padding: 0 }}>
           <IonRow>
-            <IonCol>
+            <IonCol style={{ padding: 0 }}>
               <IonDatetime
                 ref={dateRef}
                 placeholder="Selecione data"
@@ -76,7 +76,7 @@ const DayCard: React.FC<Props> = ({
 
           {date.value && (
             <IonRow>
-              <IonCol>
+              <IonCol style={{ padding: 0 }}>
                 <IonDatetime
                   readonly
                   value={date.value}

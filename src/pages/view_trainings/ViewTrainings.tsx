@@ -50,7 +50,7 @@ const ViewTrainings = () => {
       <IonContent>
         <IonGrid>
           <IonRow className="ion-padding">
-            <IonCol>
+            <IonCol style={{ padding: 0 }}>
               <Controls
                 activeFilters={muscles.length + exercisesOption.length}
               />

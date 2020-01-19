@@ -35,9 +35,9 @@ const MuscleCard: React.FC<Prop> = ({
   return (
     <IonCard>
       <IonCardHeader className="ion-padding">
-        <IonGrid>
+        <IonGrid style={{ padding: 0 }}>
           <IonRow className="ion-align-items-center">
-            <div style={{ position: 'absolute', zIndex: 999 }}>
+            <div style={{ position: 'absolute', zIndex: 999, marginTop: 2 }}>
               <CheckComponent
                 isSelected={isMainMuscleSelected}
                 handleCheck={() => selectMuscle(muscleOption.muscle)}
@@ -49,7 +49,7 @@ const MuscleCard: React.FC<Prop> = ({
               />
             </div>
 
-            <IonCol>
+            <IonCol style={{ padding: 0 }}>
               <IonCardTitle style={{ marginLeft: 40 }}>
                 {muscleOption.muscle.label}
               </IonCardTitle>
@@ -60,11 +60,11 @@ const MuscleCard: React.FC<Prop> = ({
 
       <Collapse in={isMainMuscleSelected}>
         <IonCardContent className="ion-padding">
-          <IonGrid>
+          <IonGrid style={{ padding: 0 }}>
             {muscleOption.subMuscles.map(subMuscle => {
               return (
                 <IonRow key={subMuscle.type}>
-                  <IonCol>
+                  <IonCol style={{ padding: 0 }}>
                     <SubMuscleLine
                       subMuscle={subMuscle}
                       isSelected={isMuscleSelected(subMuscle)}

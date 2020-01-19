@@ -52,22 +52,26 @@ const ExerciseCard: React.FC<Props> = ({
     if (!!editOption) editOption(key, newValue, exercise);
   };
 
+  const hasDescription = !!exercise.description;
+
   return (
     <IonCard>
       <IonCardHeader className="ion-padding">
-        <IonGrid>
+        <IonGrid style={{ padding: 0 }}>
           <IonRow>
-            <IonCol>
-              <IonGrid>
+            <IonCol style={{ padding: 0 }}>
+              <IonGrid style={{ padding: 0 }}>
                 <IonRow className="ion-align-items-center">
-                  <div style={{ position: 'absolute', zIndex: 999 }}>
+                  <div
+                    style={{ position: 'absolute', zIndex: 999, marginTop: 2 }}
+                  >
                     <CheckComponent
                       handleCheck={() => selectExerciseOption(exercise)}
                       handleUncheck={() => unselectExerciseOption(exercise)}
                       isSelected={isSelected}
                     />
                   </div>
-                  <IonCol>
+                  <IonCol style={{ padding: 0 }}>
                     <IonCardTitle style={{ marginLeft: 40 }}>
                       {exercise.title}
                     </IonCardTitle>
@@ -77,13 +81,13 @@ const ExerciseCard: React.FC<Props> = ({
             </IonCol>
           </IonRow>
 
-          <IonRow style={{ marginTop: 16 }}>
-            <IonCol>
-              {exercise.description && (
+          {hasDescription && (
+            <IonRow style={{ marginTop: 16 }}>
+              <IonCol>
                 <IonCardSubtitle>{exercise.description}</IonCardSubtitle>
-              )}
-            </IonCol>
-          </IonRow>
+              </IonCol>
+            </IonRow>
+          )}
         </IonGrid>
       </IonCardHeader>
 
@@ -94,7 +98,7 @@ const ExerciseCard: React.FC<Props> = ({
               {exercise.muscles &&
                 exercise.muscles.map(muscle => {
                   return (
-                    <IonChip key={muscle.type}>
+                    <IonChip key={muscle.type} style={{ margin: 0 }}>
                       <IonLabel>{muscle.label}</IonLabel>
                     </IonChip>
                   );
@@ -102,9 +106,9 @@ const ExerciseCard: React.FC<Props> = ({
             </IonCol>
           </IonRow>
 
-          <IonRow style={{ marginTop: 32 }}>
-            <IonCol>
-              <Collapse in={isSelected && !!editOption}>
+          <Collapse in={isSelected && !!editOption}>
+            <IonRow style={{ marginTop: 32 }}>
+              <IonCol>
                 <IonGrid>
                   <IonRow>
                     <IonCol>
@@ -136,9 +140,9 @@ const ExerciseCard: React.FC<Props> = ({
                     </IonCol>
                   </IonRow>
                 </IonGrid>
-              </Collapse>
-            </IonCol>
-          </IonRow>
+              </IonCol>
+            </IonRow>
+          </Collapse>
         </IonGrid>
       </IonCardContent>
     </IonCard>
