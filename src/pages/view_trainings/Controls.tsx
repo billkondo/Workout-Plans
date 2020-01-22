@@ -8,6 +8,7 @@ import {
   IonBadge
 } from '@ionic/react';
 import { list } from 'ionicons/icons';
+import { colors } from '@material-ui/core';
 
 import routes from 'config/routes';
 
@@ -27,16 +28,19 @@ const Controls: React.FC<Props> = ({ activeFilters }) => {
           <IonButton
             routerDirection="none"
             routerLink={routes.training.filters.root}
-            color={!hasFilters ? 'light' : 'primary'}
+            color={hasFilters ? 'danger' : 'light'}
           >
             Filtros
             {!hasFilters && (
-              <div style={{ marginLeft: 8 }}>
+              <div style={{ marginLeft: 16 }}>
                 <IonIcon icon={list}></IonIcon>
               </div>
             )}
             {hasFilters && (
-              <IonBadge style={{ marginLeft: 8 }} color="light">
+              <IonBadge
+                style={{ marginLeft: 16, color: colors.red[500] }}
+                color="light"
+              >
                 {activeFilters}
               </IonBadge>
             )}

@@ -11,7 +11,7 @@ import {
   IonRouterLink
 } from '@ionic/react';
 import { Collapse, Grid, Grow } from '@material-ui/core';
-import { eye } from 'ionicons/icons';
+import { settings } from 'ionicons/icons';
 
 import routes from 'config/routes';
 import { Exercise } from 'types/exercises';
@@ -62,7 +62,7 @@ const ExerciseCard: React.FC<Props> = ({ exercise }) => {
                   routerLink={routes.exercises.view.exercise(exercise.id)}
                   routerDirection="forward"
                 >
-                  <IonIcon icon={eye}></IonIcon>
+                  <IonIcon icon={settings}></IonIcon>
                 </IonRouterLink>
               </Grow>
             }

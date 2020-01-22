@@ -41,3 +41,6 @@ export type ExerciseError = {
   title?: string;
   description?: string;
 };
+
+// Routing
+export type ExercisesFiltersIDs = 'home';

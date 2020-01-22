@@ -42,5 +42,5 @@ export const useExercisesSearch = (args: Args) => {
     setFilteredExercises(getFilteredExercises(searchString));
   }, [exercises, searchString]);
 
-  return { search, filteredExercises };
+  return { search, filteredBySearchExercises: filteredExercises };
 };

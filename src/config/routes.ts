@@ -1,3 +1,5 @@
+import { ExercisesFiltersIDs } from 'types/exercises';
+
 const routes = {
   login: '/login',
   home: {
@@ -23,6 +25,10 @@ const routes = {
     view: {
       exercise: (id?: string) =>
         id ? `/exercises/view/${id}` : '/exercises/view/:id'
+    },
+    filters: {
+      root: (id?: ExercisesFiltersIDs) =>
+        id ? `/exercises/filters/${id}` : '/exercises/filters/:id'
     }
   }
 };

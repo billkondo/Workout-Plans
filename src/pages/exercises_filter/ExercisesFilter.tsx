@@ -4,33 +4,41 @@ import {
   IonContent,
   IonHeader,
   IonToolbar,
+  IonTitle,
   IonButtons,
   IonButton,
-  IonTitle,
   IonIcon
 } from '@ionic/react';
+import { RouteComponentProps } from 'react-router-dom';
 import { arrowBack } from 'ionicons/icons';
 import { Grid } from '@material-ui/core';
 
+import { ExercisesFiltersIDs } from 'types/exercises';
+
+import navigation from 'config/navigation';
 import routes from 'config/routes';
 
-import MuscleFilter from './MuscleFilter';
-import ExerciseFilter from './ExerciseFilter';
+import { useExercisesFilter } from 'hooks/exercises/filter';
+import { useExercisesGetter } from 'hooks/exercises/getter';
 
-import { useTrainingsFilter } from 'hooks/trainings/filter';
+import MuscleList from './MuscleList';
 
-const TrainingFilter = () => {
+interface Props extends RouteComponentProps<{ id: ExercisesFiltersIDs }> {}
+
+const ExercisesFilter: React.FC<Props> = ({ match }) => {
+  const id = match.params.id;
+  const { exercises } = useExercisesGetter();
   const {
-    addExerciseOption,
     addMuscle,
     removeMuscle,
-    removeExerciseOption,
-    exercisesOption,
     muscles,
     reset,
-    filteredTrainings,
-    saveFilters
-  } = useTrainingsFilter();
+    filteredExercises,
+    applyFilters
+  } = useExercisesFilter({
+    id,
+    exercises
+  });
 
   return (
     <IonPage>
@@ -38,14 +46,14 @@ const TrainingFilter = () => {
         <IonToolbar>
           <IonButtons slot="primary">
             <IonButton
-              routerLink={routes.training.view.root}
               routerDirection="none"
+              routerLink={navigation.exercises_filter[id].backRoute}
               onClick={reset}
             >
               <IonIcon icon={arrowBack}></IonIcon>
             </IonButton>
           </IonButtons>
-          <IonTitle className="header-font">Filtros</IonTitle>
+          <IonTitle className="header-font">Filtros de exercícios</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -53,7 +61,7 @@ const TrainingFilter = () => {
         <Grid container direction="column">
           <Grid item container justify="flex-end">
             <Grid item>
-              <IonButton size="small" onClick={reset} color="light">
+              <IonButton color="light" onClick={reset}>
                 Limpar
               </IonButton>
             </Grid>
@@ -61,20 +69,10 @@ const TrainingFilter = () => {
 
           <Grid item container>
             <Grid item>
-              <MuscleFilter
+              <MuscleList
                 muscles={muscles}
                 addMuscle={addMuscle}
                 removeMuscle={removeMuscle}
-              />
-            </Grid>
-          </Grid>
-
-          <Grid item container style={{ marginTop: 32 }}>
-            <Grid item>
-              <ExerciseFilter
-                addExercise={addExerciseOption}
-                exercises={exercisesOption}
-                removeExercise={removeExerciseOption}
               />
             </Grid>
           </Grid>
@@ -89,15 +87,15 @@ const TrainingFilter = () => {
             bottom: 0,
             margin: 0
           }}
-          onClick={saveFilters}
-          routerLink={routes.training.view.root}
+          onClick={applyFilters}
+          routerLink={routes.home.exercises}
           routerDirection="none"
         >
-          {`Ver ${filteredTrainings.length} resultados`}
+          {`Ver ${filteredExercises.length} resultados`}
         </IonButton>
       </IonContent>
     </IonPage>
   );
 };
 
-export default TrainingFilter;
+export default ExercisesFilter;

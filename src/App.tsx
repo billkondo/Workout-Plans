@@ -11,6 +11,7 @@ import BuildExercise from 'pages/build_exercise/BuildExercise';
 import ViewTrainings from 'pages/view_trainings/ViewTrainings';
 import ViewExercise from 'pages/view_exercise/ViewExercise';
 import TrainingFilter from 'pages/training_filter/TrainingFilter';
+import ExercisesFilter from 'pages/exercises_filter/ExercisesFilter';
 
 import { useFirebase } from 'hooks/firebase';
 import { useTrainingsPersistence } from 'hooks/trainings/persistence';
@@ -79,6 +80,12 @@ const App: React.FC = () => {
             exact
             path={routes.training.filters.root}
             component={TrainingFilter}
+          />
+
+          <Route
+            exact
+            path={routes.exercises.filters.root()}
+            component={ExercisesFilter}
           />
         </IonRouterOutlet>
       </IonReactRouter>

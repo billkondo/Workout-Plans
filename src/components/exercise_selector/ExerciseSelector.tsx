@@ -43,7 +43,9 @@ const ExerciseSelector: React.FC<Props> = ({
   closeSelector
 }) => {
   const { exercises } = useExercisesGetter();
-  const { search, filteredExercises } = useExercisesSearch({ exercises });
+  const { search, filteredBySearchExercises } = useExercisesSearch({
+    exercises
+  });
 
   const findExerciseOption = (exercise: Exercise) =>
     selectedExercisesOptions.find(e => e.exercise.id === exercise.id);
@@ -75,7 +77,7 @@ const ExerciseSelector: React.FC<Props> = ({
               ></IonSearchbar>
             </IonCol>
           </IonRow>
-          {filteredExercises.map(e => {
+          {filteredBySearchExercises.map(e => {
             return (
               <IonRow key={e.id}>
                 <IonCol>
