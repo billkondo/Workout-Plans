@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   IonCard,
   IonCardHeader,
@@ -6,17 +6,22 @@ import {
   IonCardSubtitle
 } from '@ionic/react';
 
-import { BuildExerciseContext } from './BuildExercise';
+import { muscleOptions, Muscle } from 'types/muscles';
+
 import MuscleSelectorComponent from 'components/muscle_selector/MuscleSelector';
-import { muscleOptions } from 'types/muscles';
 
-const MuscleSelector = () => {
+type Props = {
+  addMuscle: (muscle: Muscle) => void;
+  removeMuscle: (muscle: Muscle) => void;
+  muscles: Muscle[];
+};
+
+const MuscleSelector: React.FC<Props> = ({
+  addMuscle,
+  removeMuscle,
+  muscles
+}) => {
   const [isOpen, setOpen] = useState(false);
-  const context = useContext(BuildExerciseContext);
-
-  if (!context) return null;
-
-  const { addMuscle, muscles, removeMuscle } = context;
 
   return (
     <React.Fragment>

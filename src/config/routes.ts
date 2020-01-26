@@ -29,6 +29,10 @@ const routes = {
     filters: {
       root: (id?: ExercisesFiltersIDs) =>
         id ? `/exercises/filters/${id}` : '/exercises/filters/:id'
+    },
+    edit: {
+      exercise: (id?: string) =>
+        id ? `/exercises/edit/${id}` : '/exercises/edit/:id'
     }
   }
 };

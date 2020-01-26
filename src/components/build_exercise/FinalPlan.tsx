@@ -1,24 +1,31 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   IonGrid,
   IonRow,
   IonCol,
   IonChip,
   IonLabel,
-  IonText,
-  IonTextarea
+  IonTextarea,
+  IonText
 } from '@ionic/react';
 import { colors } from '@material-ui/core';
 
-import { BuildExerciseContext } from './BuildExercise';
+import { ExerciseError } from 'types/exercises';
+import { Muscle } from 'types/muscles';
 
-const FinalPlan = () => {
-  const context = useContext(BuildExerciseContext);
+type Props = {
+  title: string;
+  description: string;
+  muscles: Muscle[];
+  errors: ExerciseError;
+};
 
-  if (!context) return null;
-
-  const { muscles, errors, title, description } = context;
-
+const FinalPlan: React.FC<Props> = ({
+  title,
+  description,
+  muscles,
+  errors
+}) => {
   const isMusclesOK = !errors.muscles;
   const isTitleOK = !errors.title;
   const isDescriptionOK = !errors.description;

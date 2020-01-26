@@ -120,7 +120,10 @@ const ViewExercise: React.FC<Props> = ({ match }) => {
             </IonFabButton>
 
             <IonFabList side="start">
-              <IonFabButton>
+              <IonFabButton
+                routerDirection="forward"
+                routerLink={routes.exercises.edit.exercise(match.params.id)}
+              >
                 <IonIcon icon={create}></IonIcon>
               </IonFabButton>
 

@@ -7,11 +7,12 @@ import { IonReactRouter } from '@ionic/react-router';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import BuildTraining from 'pages/build_training/BuildTraining';
-import BuildExercise from 'pages/build_exercise/BuildExercise';
+import CreateExercise from 'pages/create_exercise/CreateExercise';
 import ViewTrainings from 'pages/view_trainings/ViewTrainings';
 import ViewExercise from 'pages/view_exercise/ViewExercise';
 import TrainingFilter from 'pages/training_filter/TrainingFilter';
 import ExercisesFilter from 'pages/exercises_filter/ExercisesFilter';
+import EditExercise from 'pages/edit_exercise/EditExercise';
 
 import { useFirebase } from 'hooks/firebase';
 import { useTrainingsPersistence } from 'hooks/trainings/persistence';
@@ -64,7 +65,7 @@ const App: React.FC = () => {
           <Route
             exact
             path={routes.exercises.build.root}
-            component={BuildExercise}
+            component={CreateExercise}
           />
           <Route
             exact
@@ -86,6 +87,12 @@ const App: React.FC = () => {
             exact
             path={routes.exercises.filters.root()}
             component={ExercisesFilter}
+          />
+
+          <Route
+            exact
+            path={routes.exercises.edit.exercise()}
+            component={EditExercise}
           />
         </IonRouterOutlet>
       </IonReactRouter>
