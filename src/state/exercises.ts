@@ -5,18 +5,12 @@ import { Exercise } from 'types/exercises';
 import routes from 'config/routes';
 
 const ADD_EXERCISE = 'ADD_EXERCISE';
+const DELETE_EXERCISE = 'DELETE_EXERCISE';
 
 type State = {
   exercises: Array<Exercise>;
   backRoute: string;
 };
-
-type AddExerciseAction = {
-  type: typeof ADD_EXERCISE;
-  exercise: Exercise;
-};
-
-type Action = AddExerciseAction;
 
 // ! temporary
 const initialState: State = localStorage().find('exercises') || {
@@ -24,7 +18,28 @@ const initialState: State = localStorage().find('exercises') || {
   backRoute: routes.home.exercises
 };
 
-const reducer = (state = initialState, action: Action): State => {
+type Actions =
+  | {
+      type: typeof ADD_EXERCISE;
+      exercise: Exercise;
+    }
+  | {
+      type: typeof DELETE_EXERCISE;
+      exercise: Exercise;
+    };
+
+const actions = {
+  addExercise: (exercise: Exercise): Actions => ({
+    type: ADD_EXERCISE,
+    exercise
+  }),
+  deleteExercise: (exercise: Exercise): Actions => ({
+    type: DELETE_EXERCISE,
+    exercise
+  })
+};
+
+const reducer = (state = initialState, action: Actions): State => {
   switch (action.type) {
     case 'ADD_EXERCISE':
       return {
@@ -32,16 +47,15 @@ const reducer = (state = initialState, action: Action): State => {
         exercises: state.exercises.concat(action.exercise)
       };
 
+    case 'DELETE_EXERCISE':
+      return {
+        ...state,
+        exercises: state.exercises.filter(e => e.id !== action.exercise.id)
+      };
+
     default:
       return state;
   }
-};
-
-const actions = {
-  addExercise: (exercise: Exercise): AddExerciseAction => ({
-    type: ADD_EXERCISE,
-    exercise
-  })
 };
 
 export default {

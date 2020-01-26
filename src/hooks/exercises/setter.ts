@@ -13,7 +13,14 @@ export const useExercisesSetter = () => {
     [dispatch]
   );
 
+  const deleteExerciseFromState = useCallback(
+    (exercise: Exercise) =>
+      dispatch(actions.exercises.deleteExercise(exercise)),
+    [dispatch]
+  );
+
   return {
-    addExerciseToState
+    addExerciseToState,
+    deleteExerciseFromState
   };
 };
