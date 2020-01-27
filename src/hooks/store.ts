@@ -10,13 +10,22 @@ import { ExerciseFields, ExerciseForm, Exercise } from 'types/exercises';
 import { Training, TrainingForm, TrainingFields } from 'types/training';
 
 export const useStore = () => {
-  const { addExerciseToState } = useExercisesSetter();
+  const {
+    addExerciseToState,
+    editExerciseFromState,
+    deleteExerciseFromState
+  } = useExercisesSetter();
   const { addTrainingToState } = useTrainingsSetter();
   const {
     addExerciseToFirestore,
     getUserExercisesFromFirestore
   } = useFirestore();
   const { userID } = useAuth();
+
+  const timeout = (ms: number) =>
+    new Promise(resolve => {
+      setTimeout(() => resolve(), ms);
+    });
 
   const addExercise = async (form: ExerciseForm) => {
     const exercise: ExerciseFields = {
@@ -26,7 +35,8 @@ export const useStore = () => {
       userID: userID
     };
 
-    // Add in the server
+    // TODO Add in the server
+    await timeout(2000);
     // const doc = await addExerciseToFirestore(exercise);
 
     addExerciseToState({
@@ -38,6 +48,23 @@ export const useStore = () => {
     });
 
     // console.log(doc);
+  };
+
+  const editExercise = async (exercise: Exercise, form: ExerciseForm) => {
+    // TODO do call to firestore
+    await timeout(2000);
+
+    editExerciseFromState({
+      ...exercise,
+      ...form
+    });
+  };
+
+  const deleteExercise = async (exercise: Exercise) => {
+    // TODO do call to firestore
+    await timeout(2000);
+
+    deleteExerciseFromState(exercise);
   };
 
   const getUserExercises = async () => {
@@ -60,6 +87,8 @@ export const useStore = () => {
 
   return {
     addExercise,
+    editExercise,
+    deleteExercise,
     getUserExercises,
     addTraining
   };

@@ -1,26 +1,18 @@
 import { useState } from 'react';
 
-import { useExercisesSetter } from 'hooks/exercises/setter';
+import { useStore } from 'hooks/store';
 
 import { Exercise } from 'types/exercises';
 
 export const useExercisesDelete = () => {
   const [isDeleting, setIsDeleting] = useState(false);
-  const { deleteExerciseFromState } = useExercisesSetter();
+  const store = useStore();
 
   const deleteExercise = async (exercise: Exercise): Promise<boolean> => {
-    setIsDeleting(true);
-
-    const timeout = (ms: number) =>
-      new Promise(resolve => {
-        setTimeout(() => resolve(), ms);
-      });
-
     try {
-      // TODO add firebase calls
-      await timeout(2000);
+      setIsDeleting(true);
 
-      deleteExerciseFromState(exercise);
+      await store.deleteExercise(exercise);
 
       setIsDeleting(false);
       return true;

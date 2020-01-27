@@ -11,7 +11,8 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonAlert
+  IonAlert,
+  IonLoading
 } from '@ionic/react';
 import { arrowBack } from 'ionicons/icons';
 import { Divider } from '@material-ui/core';
@@ -41,6 +42,9 @@ type Props = {
 
   failed: boolean;
   ignoreFailed: () => void;
+
+  isLoading: boolean;
+  loadingMessage: string;
 };
 
 const BuildExercise: React.FC<Props> = ({
@@ -60,7 +64,10 @@ const BuildExercise: React.FC<Props> = ({
   changeText,
 
   failed,
-  ignoreFailed
+  ignoreFailed,
+
+  isLoading,
+  loadingMessage
 }) => {
   const goBackButton = useRef<HTMLIonButtonElement>(null);
 
@@ -72,6 +79,8 @@ const BuildExercise: React.FC<Props> = ({
 
   return (
     <IonPage>
+      <IonLoading isOpen={isLoading} message={loadingMessage}></IonLoading>
+
       <IonAlert
         isOpen={failed}
         onDidDismiss={ignoreFailed}

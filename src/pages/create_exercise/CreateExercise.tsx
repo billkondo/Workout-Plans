@@ -12,7 +12,8 @@ const CreateExercise = () => {
     state,
     changeText,
     createExercise,
-    ignoreFailed
+    ignoreFailed,
+    isBuilding
   } = useExerciseBuild();
   const { backRoute } = useExercisesGetter();
 
@@ -31,6 +32,8 @@ const CreateExercise = () => {
       changeText={changeText}
       failed={state.failed}
       ignoreFailed={ignoreFailed}
+      isLoading={isBuilding}
+      loadingMessage={'Criando exercício'}
     />
   );
 };

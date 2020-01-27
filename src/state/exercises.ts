@@ -6,6 +6,7 @@ import routes from 'config/routes';
 
 const ADD_EXERCISE = 'ADD_EXERCISE';
 const DELETE_EXERCISE = 'DELETE_EXERCISE';
+const EDIT_EXERCISE = 'EDIT_EXERCISE';
 
 type State = {
   exercises: Array<Exercise>;
@@ -26,6 +27,10 @@ type Actions =
   | {
       type: typeof DELETE_EXERCISE;
       exercise: Exercise;
+    }
+  | {
+      type: typeof EDIT_EXERCISE;
+      exercise: Exercise;
     };
 
 const actions = {
@@ -35,6 +40,10 @@ const actions = {
   }),
   deleteExercise: (exercise: Exercise): Actions => ({
     type: DELETE_EXERCISE,
+    exercise
+  }),
+  editExercise: (exercise: Exercise): Actions => ({
+    type: EDIT_EXERCISE,
     exercise
   })
 };
@@ -51,6 +60,14 @@ const reducer = (state = initialState, action: Actions): State => {
       return {
         ...state,
         exercises: state.exercises.filter(e => e.id !== action.exercise.id)
+      };
+
+    case 'EDIT_EXERCISE':
+      return {
+        ...state,
+        exercises: state.exercises.map(e =>
+          e.id === action.exercise.id ? action.exercise : e
+        )
       };
 
     default:
