@@ -56,16 +56,14 @@ const ExerciseCard: React.FC<Props> = ({ exercise }) => {
           </Grid>
 
           <Grid item container justify="flex-end">
-            {
-              <Grow in={isSelected}>
-                <IonRouterLink
-                  routerLink={routes.exercises.view(exercise.id)}
-                  routerDirection="forward"
-                >
-                  <IonIcon icon={settings}></IonIcon>
-                </IonRouterLink>
-              </Grow>
-            }
+            <Grow in={isSelected}>
+              <IonRouterLink
+                routerLink={routes.exercises.view(exercise.id)}
+                routerDirection="forward"
+              >
+                <IonIcon icon={settings}></IonIcon>
+              </IonRouterLink>
+            </Grow>
           </Grid>
         </Grid>
       </IonCardContent>

@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import {
   IonCard,
   IonCardContent,
-  IonGrid,
-  IonRow,
-  IonCol,
   IonChip,
   IonLabel,
-  IonIcon
+  IonIcon,
+  IonRouterLink
 } from '@ionic/react';
-import { Collapse, Grow } from '@material-ui/core';
+import { Collapse, Grow, Grid } from '@material-ui/core';
 import { settings } from 'ionicons/icons';
 
 import { Training } from 'types/training';
 
-import DatesDisplay from './DatesDisplay';
-import ExerciseOptionDisplay from './ExerciseOptionDisplay';
+import DatesList from 'components/trainings/DatesList';
+import MusclesList from 'components/trainings/MusclesList';
+import ExercisesOptionsList from 'components/trainings/ExercisesOptionsList';
+
+import routes from 'config/routes';
 
 type Props = {
   training: Training;
@@ -29,46 +30,28 @@ const TrainingCard: React.FC<Props> = ({ training }) => {
       <IonCardContent>
         <Grow in={isSelected}>
           <div style={{ position: 'absolute', right: 0, top: 0, margin: 16 }}>
-            <IonIcon icon={settings}></IonIcon>
+            <IonRouterLink
+              routerDirection="forward"
+              routerLink={routes.trainings.view(training.id)}
+            >
+              <IonIcon icon={settings}></IonIcon>
+            </IonRouterLink>
           </div>
         </Grow>
 
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <DatesDisplay dates={training.dates} />
-            </IonCol>
-          </IonRow>
+        <Grid container direction="column" spacing={1}>
+          <Grid item container>
+            <DatesList dates={training.dates} />
+          </Grid>
 
-          <IonRow>
-            <IonCol>
-              {training.muscles.map(m => {
-                return (
-                  <IonChip key={m.type}>
-                    <IonLabel>{m.label}</IonLabel>
-                  </IonChip>
-                );
-              })}
-            </IonCol>
-          </IonRow>
+          <Grid item container>
+            <MusclesList muscles={training.muscles} />
+          </Grid>
 
           <Collapse in={isSelected}>
-            <IonRow className="ion-padding">
-              <IonCol>
-                {training.exerciseOptions.map(e => {
-                  return (
-                    <div
-                      key={e.exercise.id}
-                      style={{ marginTop: 16, marginBottom: 8 }}
-                    >
-                      <ExerciseOptionDisplay exerciseOption={e} />
-                    </div>
-                  );
-                })}
-              </IonCol>
-            </IonRow>
+            <ExercisesOptionsList exercisesOptions={training.exerciseOptions} />
           </Collapse>
-        </IonGrid>
+        </Grid>
       </IonCardContent>
     </IonCard>
   );

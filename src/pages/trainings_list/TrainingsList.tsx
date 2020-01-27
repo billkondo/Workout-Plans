@@ -66,6 +66,14 @@ const TrainingsList = () => {
               </IonRow>
             );
           })}
+
+          {trainingsToDisplay.length === 0 && (
+            <IonRow>
+              <IonCol>
+                <div className="ion-text-center">Nenhum treino encontrado</div>
+              </IonCol>
+            </IonRow>
+          )}
         </IonGrid>
       </IonContent>
     </IonPage>

@@ -94,7 +94,7 @@ const MyExercises = () => {
       {isExercisesEmpty && (
         <IonRow>
           <IonCol>
-            <div className="ion-text-center">Nenhum exercício criado</div>
+            <div className="ion-text-center">Nenhum exercício encontrado</div>
           </IonCol>
         </IonRow>
       )}

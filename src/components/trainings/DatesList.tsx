@@ -7,7 +7,7 @@ type Props = {
   dates: AppDate[];
 };
 
-const DatesDisplay: React.FC<Props> = ({ dates }) => {
+const LineDisplay: React.FC<Props> = ({ dates }) => {
   const sortedDates = dates.sort((a, b) => (a.value < b.value ? -1 : 1));
 
   const currentDate = new Date();
@@ -35,4 +35,4 @@ const DatesDisplay: React.FC<Props> = ({ dates }) => {
   );
 };
 
-export default DatesDisplay;
+export default LineDisplay;
