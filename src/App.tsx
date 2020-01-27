@@ -62,36 +62,36 @@ const App: React.FC = () => {
           />
           <Route
             exact
-            path={routes.trainings.build.root}
+            path={routes.trainings.create}
             component={TrainingsCreate}
           />
           <Route exact path={routes.login} component={Login} />
           <Route
             exact
-            path={routes.exercises.build.root}
+            path={routes.exercises.create}
             component={ExercisesCreate}
           />
           <Route exact path={routes.trainings.list} component={TrainingsList} />
           <Route
             exact
-            path={routes.exercises.view.exercise()}
+            path={routes.exercises.view()}
             component={ExercisesView}
           />
           <Route
             exact
-            path={routes.trainings.filters.root}
+            path={routes.trainings.filters}
             component={TrainingsFilter}
           />
 
           <Route
             exact
-            path={routes.exercises.filters.root()}
+            path={routes.exercises.filters()}
             component={ExercisesFilter}
           />
 
           <Route
             exact
-            path={routes.exercises.edit.exercise()}
+            path={routes.exercises.edit()}
             component={ExercisesEdit}
           />
 

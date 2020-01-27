@@ -122,7 +122,7 @@ const ExercisesView: React.FC<Props> = ({ match }) => {
             <IonFabList side="start">
               <IonFabButton
                 routerDirection="forward"
-                routerLink={routes.exercises.edit.exercise(match.params.id)}
+                routerLink={routes.exercises.edit(match.params.id)}
               >
                 <IonIcon icon={create}></IonIcon>
               </IonFabButton>

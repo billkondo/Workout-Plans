@@ -8,32 +8,20 @@ const routes = {
     exercises: '/home/exercises'
   },
   trainings: {
-    build: {
-      root: '/training/build'
-    },
+    create: '/trainings/create',
     list: '/trainings/list',
     view: (id?: string) =>
       id ? `/trainings/view/${id}` : '/trainings/view/:id',
-    filters: {
-      root: '/training/filters'
-    }
+    filters: '/trainings/filters'
   },
   exercises: {
-    build: {
-      root: '/exercises/build'
-    },
-    view: {
-      exercise: (id?: string) =>
-        id ? `/exercises/view/${id}` : '/exercises/view/:id'
-    },
-    filters: {
-      root: (id?: ExercisesFiltersIDs) =>
-        id ? `/exercises/filters/${id}` : '/exercises/filters/:id'
-    },
-    edit: {
-      exercise: (id?: string) =>
-        id ? `/exercises/edit/${id}` : '/exercises/edit/:id'
-    }
+    create: '/exercises/create',
+    view: (id?: string) =>
+      id ? `/exercises/view/${id}` : '/exercises/view/:id',
+    filters: (id?: ExercisesFiltersIDs) =>
+      id ? `/exercises/filters/${id}` : '/exercises/filters/:id',
+    edit: (id?: string) =>
+      id ? `/exercises/edit/${id}` : '/exercises/edit/:id'
   }
 };
 

@@ -23,7 +23,7 @@ const ExercisesHome = () => {
             <IonCol size="6">
               <IonCard
                 routerDirection="forward"
-                routerLink={routes.exercises.build.root}
+                routerLink={routes.exercises.create}
               >
                 <IonCardContent>
                   <IonGrid>

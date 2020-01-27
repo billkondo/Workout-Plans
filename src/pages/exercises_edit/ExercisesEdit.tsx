@@ -26,7 +26,7 @@ const ExercisesEdit: React.FC<Props> = ({ match }) => {
   return (
     <BuildExercise
       headerTitle="Editando exercício"
-      backRoute={routes.exercises.view.exercise(match.params.id)}
+      backRoute={routes.exercises.view(match.params.id)}
       buttonLabel="Salvar mudanças"
       build={editExercise}
       title={state.title}

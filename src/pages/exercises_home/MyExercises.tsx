@@ -60,7 +60,7 @@ const MyExercises = () => {
         <IonCol style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IonButton
             routerDirection="none"
-            routerLink={routes.exercises.filters.root('home')}
+            routerLink={routes.exercises.filters('home')}
             color={hasFilters ? 'danger' : 'light'}
           >
             Filtros

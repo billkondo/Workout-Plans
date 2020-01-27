@@ -27,7 +27,7 @@ const Controls: React.FC<Props> = ({ activeFilters }) => {
         >
           <IonButton
             routerDirection="none"
-            routerLink={routes.trainings.filters.root}
+            routerLink={routes.trainings.filters}
             color={hasFilters ? 'danger' : 'light'}
           >
             Filtros

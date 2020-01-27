@@ -59,7 +59,7 @@ const ExerciseCard: React.FC<Props> = ({ exercise }) => {
             {
               <Grow in={isSelected}>
                 <IonRouterLink
-                  routerLink={routes.exercises.view.exercise(exercise.id)}
+                  routerLink={routes.exercises.view(exercise.id)}
                   routerDirection="forward"
                 >
                   <IonIcon icon={settings}></IonIcon>
