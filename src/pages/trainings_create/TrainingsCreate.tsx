@@ -58,7 +58,7 @@ export const BuildTrainingContext = React.createContext<BuildTrainingContextInte
   null
 );
 
-const BuildTraining = () => {
+const TrainingsCreate = () => {
   const {
     state,
     addMuscle,
@@ -168,4 +168,4 @@ const BuildTraining = () => {
   );
 };
 
-export default BuildTraining;
+export default TrainingsCreate;

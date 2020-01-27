@@ -14,7 +14,7 @@ import routes from 'config/routes';
 
 import MyExercises from './MyExercises';
 
-const Exercises = () => {
+const ExercisesHome = () => {
   return (
     <IonPage>
       <IonContent>
@@ -51,4 +51,4 @@ const Exercises = () => {
   );
 };
 
-export default Exercises;
+export default ExercisesHome;

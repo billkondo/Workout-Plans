@@ -5,14 +5,18 @@ import { IonReactRouter } from '@ionic/react-router';
 
 // Custom components
 import Home from 'pages/Home';
+
 import Login from 'pages/Login';
-import BuildTraining from 'pages/build_training/BuildTraining';
-import CreateExercise from 'pages/create_exercise/CreateExercise';
-import ViewTrainings from 'pages/view_trainings/ViewTrainings';
-import ViewExercise from 'pages/view_exercise/ViewExercise';
-import TrainingFilter from 'pages/training_filter/TrainingFilter';
+
+import TrainingsCreate from 'pages/trainings_create/TrainingsCreate';
+import TrainingsList from 'pages/trainings_list/TrainingsList';
+import TrainingsView from 'pages/trainings_view/TrainingsView';
+import TrainingsFilter from 'pages/trainings_filter/TrainingsFilter';
+
+import ExercisesCreate from 'pages/exercises_create/ExercisesCreate';
+import ExercisesView from 'pages/exercises_view/ExercisesView';
 import ExercisesFilter from 'pages/exercises_filter/ExercisesFilter';
-import EditExercise from 'pages/edit_exercise/EditExercise';
+import ExercisesEdit from 'pages/exercises_edit/ExercisesEdit';
 
 import { useFirebase } from 'hooks/firebase';
 import { useTrainingsPersistence } from 'hooks/trainings/persistence';
@@ -58,29 +62,25 @@ const App: React.FC = () => {
           />
           <Route
             exact
-            path={routes.training.build.root}
-            component={BuildTraining}
+            path={routes.trainings.build.root}
+            component={TrainingsCreate}
           />
           <Route exact path={routes.login} component={Login} />
           <Route
             exact
             path={routes.exercises.build.root}
-            component={CreateExercise}
+            component={ExercisesCreate}
           />
-          <Route
-            exact
-            path={routes.training.view.root}
-            component={ViewTrainings}
-          />
+          <Route exact path={routes.trainings.list} component={TrainingsList} />
           <Route
             exact
             path={routes.exercises.view.exercise()}
-            component={ViewExercise}
+            component={ExercisesView}
           />
           <Route
             exact
-            path={routes.training.filters.root}
-            component={TrainingFilter}
+            path={routes.trainings.filters.root}
+            component={TrainingsFilter}
           />
 
           <Route
@@ -92,7 +92,13 @@ const App: React.FC = () => {
           <Route
             exact
             path={routes.exercises.edit.exercise()}
-            component={EditExercise}
+            component={ExercisesEdit}
+          />
+
+          <Route
+            exact
+            path={routes.trainings.view()}
+            component={TrainingsView}
           />
         </IonRouterOutlet>
       </IonReactRouter>

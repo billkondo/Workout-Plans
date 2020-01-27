@@ -30,7 +30,7 @@ import { useExercisesDelete } from 'hooks/exercises/delete';
 
 interface Props extends RouteComponentProps<{ id: string }> {}
 
-const ViewExercise: React.FC<Props> = ({ match }) => {
+const ExercisesView: React.FC<Props> = ({ match }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const { findExerciseByID } = useExercisesGetter();
   const exercise = findExerciseByID(match.params.id);
@@ -141,4 +141,4 @@ const ViewExercise: React.FC<Props> = ({ match }) => {
   );
 };
 
-export default ViewExercise;
+export default ExercisesView;

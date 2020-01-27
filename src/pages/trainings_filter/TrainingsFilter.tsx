@@ -19,7 +19,7 @@ import ExerciseFilter from './ExerciseFilter';
 
 import { useTrainingsFilter } from 'hooks/trainings/filter';
 
-const TrainingFilter = () => {
+const TrainingsFilter = () => {
   const {
     addExerciseOption,
     addMuscle,
@@ -38,7 +38,7 @@ const TrainingFilter = () => {
         <IonToolbar>
           <IonButtons slot="primary">
             <IonButton
-              routerLink={routes.training.view.root}
+              routerLink={routes.trainings.list}
               routerDirection="none"
               onClick={reset}
             >
@@ -90,7 +90,7 @@ const TrainingFilter = () => {
             margin: 0
           }}
           onClick={saveFilters}
-          routerLink={routes.training.view.root}
+          routerLink={routes.trainings.list}
           routerDirection="none"
         >
           {`Ver ${filteredTrainings.length} resultados`}
@@ -100,4 +100,4 @@ const TrainingFilter = () => {
   );
 };
 
-export default TrainingFilter;
+export default TrainingsFilter;

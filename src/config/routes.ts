@@ -7,13 +7,13 @@ const routes = {
     training: '/home/training',
     exercises: '/home/exercises'
   },
-  training: {
+  trainings: {
     build: {
       root: '/training/build'
     },
-    view: {
-      root: '/training/view'
-    },
+    list: '/trainings/list',
+    view: (id?: string) =>
+      id ? `/trainings/view/${id}` : '/trainings/view/:id',
     filters: {
       root: '/training/filters'
     }

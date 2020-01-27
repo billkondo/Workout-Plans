@@ -8,7 +8,7 @@ import {
 
 import MuscleSelectorComponent from 'components/muscle_selector/MuscleSelector';
 
-import { BuildTrainingContext } from './BuildTraining';
+import { BuildTrainingContext } from './TrainingsCreate';
 import { Muscle, muscleOptions } from 'types/muscles';
 
 const MuscleSelector = () => {

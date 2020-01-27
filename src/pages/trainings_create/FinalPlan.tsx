@@ -3,7 +3,7 @@ import { IonGrid, IonRow, IonCol, IonChip, IonLabel } from '@ionic/react';
 import { format } from 'date-fns';
 import { colors } from '@material-ui/core';
 
-import { BuildTrainingContext } from './BuildTraining';
+import { BuildTrainingContext } from './TrainingsCreate';
 
 const FinalPlan = () => {
   const context = useContext(BuildTrainingContext);

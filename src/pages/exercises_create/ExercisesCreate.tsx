@@ -1,47 +1,41 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 
 import BuildExercise from 'components/build_exercise/BuildExercise';
 
 import { useExerciseBuild } from 'hooks/exercises/build';
 import { useExercisesGetter } from 'hooks/exercises/getter';
 
-import routes from 'config/routes';
-
-interface Props extends RouteComponentProps<{ id: string }> {}
-
-const EditExercise: React.FC<Props> = ({ match }) => {
-  const { findExerciseByID } = useExercisesGetter();
-  const exercise = findExerciseByID(match.params.id);
+const ExercisesCreate = () => {
   const {
-    state,
     addMuscle,
     removeMuscle,
+    state,
     changeText,
+    createExercise,
     ignoreFailed,
-    editExercise,
     isBuilding
-  } = useExerciseBuild(exercise);
+  } = useExerciseBuild();
+  const { backRoute } = useExercisesGetter();
 
   return (
     <BuildExercise
-      headerTitle="Editando exercício"
-      backRoute={routes.exercises.view.exercise(match.params.id)}
-      buttonLabel="Salvar mudanças"
-      build={editExercise}
       title={state.title}
       description={state.description}
       muscles={state.muscles}
+      backRoute={backRoute}
+      buttonLabel="Criar exercício"
+      headerTitle="Montando exercício"
       errors={state.errors}
+      build={createExercise}
       addMuscle={addMuscle}
       removeMuscle={removeMuscle}
       changeText={changeText}
       failed={state.failed}
       ignoreFailed={ignoreFailed}
       isLoading={isBuilding}
-      loadingMessage={'Editando exercício'}
+      loadingMessage={'Criando exercício'}
     />
   );
 };
 
-export default EditExercise;
+export default ExercisesCreate;

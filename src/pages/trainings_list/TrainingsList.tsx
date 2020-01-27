@@ -22,7 +22,7 @@ import { useTrainingsFilter } from 'hooks/trainings/filter';
 import Controls from './Controls';
 import TrainingCard from './TrainingCard';
 
-const ViewTrainings = () => {
+const TrainingsList = () => {
   const { trainings } = useTrainingsGetter();
   const {
     hasFilters,
@@ -72,4 +72,4 @@ const ViewTrainings = () => {
   );
 };
 
-export default ViewTrainings;
+export default TrainingsList;

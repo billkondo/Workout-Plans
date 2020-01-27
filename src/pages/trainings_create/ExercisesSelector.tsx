@@ -7,7 +7,7 @@ import {
 } from '@ionic/react';
 
 import ExerciseSelectorComponent from 'components/exercise_selector/ExerciseSelector';
-import { BuildTrainingContext } from './BuildTraining';
+import { BuildTrainingContext } from './TrainingsCreate';
 import { Exercise } from 'types/exercises';
 
 const ExerciesSelector = () => {

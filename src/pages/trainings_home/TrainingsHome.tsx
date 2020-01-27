@@ -14,7 +14,7 @@ import WeekTraining from './WeekTraining';
 
 import routes from 'config/routes';
 
-const Trainings = () => {
+const TrainingsHome = () => {
   return (
     <IonPage>
       <IonContent>
@@ -23,7 +23,7 @@ const Trainings = () => {
             <IonCol size="6">
               <IonCard
                 routerDirection="forward"
-                routerLink={routes.training.build.root}
+                routerLink={routes.trainings.build.root}
               >
                 <IonCardContent>
                   <IonGrid>
@@ -66,7 +66,7 @@ const Trainings = () => {
             <IonCol size="6">
               <IonCard
                 routerDirection="forward"
-                routerLink={routes.training.view.root}
+                routerLink={routes.trainings.list}
               >
                 <IonCardContent>
                   <IonGrid>
@@ -88,4 +88,4 @@ const Trainings = () => {
   );
 };
 
-export default Trainings;
+export default TrainingsHome;

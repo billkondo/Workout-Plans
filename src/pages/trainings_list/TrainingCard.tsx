@@ -6,9 +6,11 @@ import {
   IonRow,
   IonCol,
   IonChip,
-  IonLabel
+  IonLabel,
+  IonIcon
 } from '@ionic/react';
-import { Collapse } from '@material-ui/core';
+import { Collapse, Grow } from '@material-ui/core';
+import { settings } from 'ionicons/icons';
 
 import { Training } from 'types/training';
 
@@ -25,6 +27,12 @@ const TrainingCard: React.FC<Props> = ({ training }) => {
   return (
     <IonCard onClick={() => setIsSelected(!isSelected)}>
       <IonCardContent>
+        <Grow in={isSelected}>
+          <div style={{ position: 'absolute', right: 0, top: 0, margin: 16 }}>
+            <IonIcon icon={settings}></IonIcon>
+          </div>
+        </Grow>
+
         <IonGrid>
           <IonRow>
             <IonCol>

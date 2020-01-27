@@ -7,7 +7,7 @@ import {
   IonModal
 } from '@ionic/react';
 
-import { BuildTrainingContext } from './BuildTraining';
+import { BuildTrainingContext } from './TrainingsCreate';
 import DaySelectorContent from 'components/day_selector/DaySelector';
 
 const DaySelector = () => {

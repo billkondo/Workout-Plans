@@ -98,7 +98,7 @@ const ExerciseCard: React.FC<Props> = ({
               {exercise.muscles &&
                 exercise.muscles.map(muscle => {
                   return (
-                    <IonChip key={muscle.type} style={{ margin: 0 }}>
+                    <IonChip key={muscle.type}>
                       <IonLabel>{muscle.label}</IonLabel>
                     </IonChip>
                   );

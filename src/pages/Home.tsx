@@ -12,8 +12,8 @@ import { calendar, bicycle } from 'ionicons/icons';
 
 import routes from 'config/routes';
 
-import Training from 'pages/trainings/Trainings';
-import Exercices from 'pages/exercises/Exercises';
+import TrainingHome from 'pages/trainings_home/TrainingsHome';
+import ExercicesHome from 'pages/exercises_home/ExercisesHome';
 
 const Home: React.FC = () => {
   return (
@@ -23,12 +23,12 @@ const Home: React.FC = () => {
         <Route
           exact
           path={routes.home.training}
-          render={() => <Training />}
+          render={() => <TrainingHome />}
         ></Route>
         <Route
           exact={true}
           path={routes.home.exercises}
-          render={() => <Exercices />}
+          render={() => <ExercicesHome />}
         ></Route>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
