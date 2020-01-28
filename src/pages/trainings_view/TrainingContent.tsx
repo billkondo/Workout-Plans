@@ -1,20 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import {
-  IonPage,
   IonContent,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonButton,
   IonIcon,
   IonFab,
   IonFabButton,
   IonFabList,
   IonGrid,
   IonRow,
-  IonCol
+  IonCol,
+  IonAlert,
+  IonLoading
 } from '@ionic/react';
-import { arrowBack, arrowDropleft, create, trash } from 'ionicons/icons';
+import { arrowDropleft, create, trash } from 'ionicons/icons';
 
 import { Training } from 'types/training';
 
@@ -22,33 +19,42 @@ import DatesList from 'components/trainings/DatesList';
 import MusclesList from 'components/trainings/MusclesList';
 import ExercisesOptionsList from 'components/trainings/ExercisesOptionsList';
 
-import routes from 'config/routes';
-
 type Props = {
   training: Training;
+  isDeleting: boolean;
+  deleteHandler: (training: Training) => void;
 };
 
-const TrainingPage: React.FC<Props> = ({ training }) => {
-  const goBackButton = useRef<HTMLIonButtonElement>(null);
+const TrainingPage: React.FC<Props> = ({
+  training,
+  isDeleting,
+  deleteHandler
+}) => {
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
   return (
-    <IonPage>
-      <IonContent>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="primary">
-              <IonButton
-                routerLink={routes.trainings.list}
-                routerDirection="back"
-                ref={goBackButton}
-              >
-                <IonIcon icon={arrowBack}></IonIcon>
-              </IonButton>
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
+    <React.Fragment>
+      <IonLoading isOpen={isDeleting} message="Deletando treino"></IonLoading>
 
-        <IonGrid style={{ marginBottom: 50 }}>
+      <IonAlert
+        isOpen={showDeleteAlert}
+        header="Atenção"
+        message="Deseja mesmo deletar esse treino ?"
+        buttons={[
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => setShowDeleteAlert(false)
+          },
+          {
+            text: 'Deletar',
+            handler: () => deleteHandler(training)
+          }
+        ]}
+      ></IonAlert>
+
+      <IonContent>
+        <IonGrid style={{ marginBottom: 75 }}>
           <IonRow>
             <IonCol>
               <DatesList dates={training.dates} />
@@ -87,13 +93,13 @@ const TrainingPage: React.FC<Props> = ({ training }) => {
             <IonFabButton>
               <IonIcon
                 icon={trash}
-                // onClick={() => setShowDeleteAlert(true)}
+                onClick={() => setShowDeleteAlert(true)}
               ></IonIcon>
             </IonFabButton>
           </IonFabList>
         </IonFab>
       </IonContent>
-    </IonPage>
+    </React.Fragment>
   );
 };
 

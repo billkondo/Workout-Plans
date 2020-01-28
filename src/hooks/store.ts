@@ -15,7 +15,7 @@ export const useStore = () => {
     editExerciseFromState,
     deleteExerciseFromState
   } = useExercisesSetter();
-  const { addTrainingToState } = useTrainingsSetter();
+  const { addTrainingToState, deleteTrainingFromState } = useTrainingsSetter();
   const {
     addExerciseToFirestore,
     getUserExercisesFromFirestore
@@ -85,11 +85,19 @@ export const useStore = () => {
     });
   };
 
+  const deleteTraining = async (training: Training) => {
+    // TODO call firebase
+    await timeout(2000);
+
+    deleteTrainingFromState(training);
+  };
+
   return {
     addExercise,
     editExercise,
     deleteExercise,
     getUserExercises,
-    addTraining
+    addTraining,
+    deleteTraining
   };
 };

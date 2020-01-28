@@ -13,7 +13,14 @@ export const useTrainingsSetter = () => {
     [dispatch]
   );
 
+  const deleteTrainingFromState = useCallback(
+    (training: Training) =>
+      dispatch(actions.trainings.deleteTraining(training)),
+    [dispatch]
+  );
+
   return {
-    addTrainingToState
+    addTrainingToState,
+    deleteTrainingFromState
   };
 };
