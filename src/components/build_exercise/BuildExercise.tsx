@@ -42,6 +42,7 @@ type Props = {
 
   failed: boolean;
   ignoreFailed: () => void;
+  failMessage: string;
 
   isLoading: boolean;
   loadingMessage: string;
@@ -65,6 +66,7 @@ const BuildExercise: React.FC<Props> = ({
 
   failed,
   ignoreFailed,
+  failMessage,
 
   isLoading,
   loadingMessage
@@ -85,7 +87,7 @@ const BuildExercise: React.FC<Props> = ({
         isOpen={failed}
         onDidDismiss={ignoreFailed}
         header="Erro"
-        message="Não foi possível criar o exercício"
+        message={failMessage}
       ></IonAlert>
 
       <IonContent>

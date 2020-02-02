@@ -32,6 +32,7 @@ const ExercisesCreate = () => {
       changeText={changeText}
       failed={state.failed}
       ignoreFailed={ignoreFailed}
+      failMessage="Não foi possível criar exercício"
       isLoading={isBuilding}
       loadingMessage={'Criando exercício'}
     />

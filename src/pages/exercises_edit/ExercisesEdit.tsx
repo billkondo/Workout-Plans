@@ -38,6 +38,7 @@ const ExercisesEdit: React.FC<Props> = ({ match }) => {
       changeText={changeText}
       failed={state.failed}
       ignoreFailed={ignoreFailed}
+      failMessage="Não foi possível editar exercício"
       isLoading={isBuilding}
       loadingMessage={'Editando exercício'}
     />
