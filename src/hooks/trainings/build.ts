@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useState, useReducer, useEffect } from 'react';
 
 import { useStore } from 'hooks/store';
 
@@ -6,7 +6,7 @@ import { useStore } from 'hooks/store';
 import { Muscle } from 'types/muscles';
 import { ExerciseOption, Exercise } from 'types/exercises';
 import { AppDate } from 'types/dates';
-import { TrainingError, TrainingForm } from 'types/training';
+import { TrainingError, TrainingForm, Training } from 'types/training';
 
 type State = {
   muscles: Array<Muscle>;
@@ -38,6 +38,10 @@ type Actions =
       key: string;
       value: number | number[];
       exercise: Exercise;
+    }
+  | {
+      type: 'STATE_SETUP';
+      state: State;
     };
 
 const initialState: State = {
@@ -138,14 +142,34 @@ const reducer = (state = initialState, action: Actions): State => {
         failed: action.failed
       };
 
+    case 'STATE_SETUP':
+      return action.state;
+
     default:
       return state;
   }
 };
 
-export const useTrainingsBuild = () => {
-  const { addTraining } = useStore();
+export const useTrainingsBuild = (training?: Training) => {
+  const store = useStore();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [isBuilding, setIsBuilding] = useState(false);
+
+  useEffect(() => {
+    if (!!training) {
+      dispatch({
+        type: 'STATE_SETUP',
+        state: {
+          muscles: training.muscles,
+          exerciseOptions: training.exerciseOptions,
+          dates: training.dates,
+          dayToOpen: '',
+          errors: {},
+          failed: false
+        }
+      });
+    }
+  }, [training]);
 
   const addMuscle = (muscle: Muscle) =>
     dispatch({ type: 'ADD_MUSCLE', muscle });
@@ -213,9 +237,38 @@ export const useTrainingsBuild = () => {
         dates: state.dates
       };
 
-      // validate state
       if (validate(form)) {
-        await addTraining(form);
+        setIsBuilding(true);
+
+        await store.addTraining(form);
+
+        setIsBuilding(false);
+        return true;
+      }
+
+      return false;
+    } catch (err) {
+      setFailed(true);
+      return false;
+    }
+  };
+
+  const editTraining = async (): Promise<boolean> => {
+    if (!training) return false;
+
+    try {
+      const form: TrainingForm = {
+        muscles: state.muscles,
+        exerciseOptions: state.exerciseOptions,
+        dates: state.dates
+      };
+
+      if (validate(form)) {
+        setIsBuilding(true);
+
+        await store.editTraining(training, form);
+
+        setIsBuilding(false);
         return true;
       }
 
@@ -237,6 +290,8 @@ export const useTrainingsBuild = () => {
     editDate,
     state,
     createTraining,
-    ignoreFailed
+    ignoreFailed,
+    isBuilding,
+    editTraining
   };
 };

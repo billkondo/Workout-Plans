@@ -19,6 +19,8 @@ import DatesList from 'components/trainings/DatesList';
 import MusclesList from 'components/trainings/MusclesList';
 import ExercisesOptionsList from 'components/trainings/ExercisesOptionsList';
 
+import routes from 'config/routes';
+
 type Props = {
   training: Training;
   isDeleting: boolean;
@@ -84,8 +86,8 @@ const TrainingPage: React.FC<Props> = ({
 
           <IonFabList side="start">
             <IonFabButton
-            // routerDirection="forward"
-            // routerLink={routes.exercises.edit(match.params.id)}
+              routerDirection="forward"
+              routerLink={routes.trainings.edit(training.id)}
             >
               <IonIcon icon={create}></IonIcon>
             </IonFabButton>

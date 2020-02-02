@@ -4,6 +4,7 @@ import { Training } from 'types/training';
 
 const ADD_TRAINING = 'ADD_TRAINING';
 const DELETE_TRAINING = 'DELETE_TRAINING';
+const EDIT_TRAINING = 'EDIT_TRAINING';
 
 type State = {
   trainings: Array<Training>;
@@ -22,6 +23,10 @@ type Actions =
   | {
       type: typeof DELETE_TRAINING;
       training: Training;
+    }
+  | {
+      type: typeof EDIT_TRAINING;
+      training: Training;
     };
 
 const actions = {
@@ -31,6 +36,10 @@ const actions = {
   }),
   deleteTraining: (training: Training): Actions => ({
     type: DELETE_TRAINING,
+    training
+  }),
+  editTraining: (training: Training): Actions => ({
+    type: EDIT_TRAINING,
     training
   })
 };
@@ -47,6 +56,14 @@ const reducer = (state = initialState, action: Actions): State => {
       return {
         ...state,
         trainings: state.trainings.filter(t => t.id !== action.training.id)
+      };
+
+    case 'EDIT_TRAINING':
+      return {
+        ...state,
+        trainings: state.trainings.map(t =>
+          t.id === action.training.id ? action.training : t
+        )
       };
 
     default:

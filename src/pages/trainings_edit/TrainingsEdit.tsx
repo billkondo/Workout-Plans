@@ -1,13 +1,18 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+
+import BuildTraining from 'components/build_training/BuildTraining';
 
 import routes from 'config/routes';
 
-// Components
-import BuildTraining from 'components/build_training/BuildTraining';
-
 import { useTrainingsBuild } from 'hooks/trainings/build';
+import { useTrainingsGetter } from 'hooks/trainings/getter';
 
-const TrainingsCreate = () => {
+interface Props extends RouteComponentProps<{ id: string }> {}
+
+const TrainingsEdit: React.FC<Props> = ({ match }) => {
+  const { findTrainingByID } = useTrainingsGetter();
+  const training = findTrainingByID(match.params.id);
   const {
     state,
     addMuscle,
@@ -18,17 +23,17 @@ const TrainingsCreate = () => {
     addDate,
     removeDate,
     editDate,
-    createTraining,
     ignoreFailed,
-    isBuilding
-  } = useTrainingsBuild();
+    isBuilding,
+    editTraining
+  } = useTrainingsBuild(training);
 
   return (
     <BuildTraining
-      headerTitle="Criando treino"
-      backRoute={routes.home.training}
-      buttonLabel="Criar treino"
-      build={createTraining}
+      headerTitle="Editando treino"
+      backRoute={routes.trainings.view(match.params.id)}
+      buttonLabel="Editar treino"
+      build={editTraining}
       muscles={state.muscles}
       exercisesOptions={state.exerciseOptions}
       dates={state.dates}
@@ -42,13 +47,13 @@ const TrainingsCreate = () => {
       editDate={editDate}
       dayToOpen={state.dayToOpen}
       failed={state.failed}
-      failMessage="Não foi possível criar treino"
-      isLoading={isBuilding}
-      loadingMessage="Criando treino"
       ignoreFailed={ignoreFailed}
+      failMessage="Não foi possível editar treino"
+      isLoading={isBuilding}
+      loadingMessage="Editando treino"
       errors={state.errors}
     />
   );
 };
 
-export default TrainingsCreate;
+export default TrainingsEdit;

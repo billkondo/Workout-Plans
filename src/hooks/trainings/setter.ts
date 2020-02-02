@@ -19,8 +19,14 @@ export const useTrainingsSetter = () => {
     [dispatch]
   );
 
+  const editTrainingFromState = useCallback(
+    (training: Training) => dispatch(actions.trainings.editTraining(training)),
+    [dispatch]
+  );
+
   return {
     addTrainingToState,
-    deleteTrainingFromState
+    deleteTrainingFromState,
+    editTrainingFromState
   };
 };

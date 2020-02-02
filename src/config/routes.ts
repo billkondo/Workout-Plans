@@ -12,7 +12,9 @@ const routes = {
     list: '/trainings/list',
     view: (id?: string) =>
       id ? `/trainings/view/${id}` : '/trainings/view/:id',
-    filters: '/trainings/filters'
+    filters: '/trainings/filters',
+    edit: (id?: string) =>
+      id ? `/trainings/edit/${id}` : '/trainings/edit/:id'
   },
   exercises: {
     create: '/exercises/create',

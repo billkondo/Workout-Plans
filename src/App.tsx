@@ -12,6 +12,7 @@ import TrainingsCreate from 'pages/trainings_create/TrainingsCreate';
 import TrainingsList from 'pages/trainings_list/TrainingsList';
 import TrainingsView from 'pages/trainings_view/TrainingsView';
 import TrainingsFilter from 'pages/trainings_filter/TrainingsFilter';
+import TrainingsEdit from 'pages/trainings_edit/TrainingsEdit';
 
 import ExercisesCreate from 'pages/exercises_create/ExercisesCreate';
 import ExercisesView from 'pages/exercises_view/ExercisesView';
@@ -99,6 +100,12 @@ const App: React.FC = () => {
             exact
             path={routes.trainings.view()}
             component={TrainingsView}
+          />
+
+          <Route
+            exact
+            path={routes.trainings.edit()}
+            component={TrainingsEdit}
           />
         </IonRouterOutlet>
       </IonReactRouter>

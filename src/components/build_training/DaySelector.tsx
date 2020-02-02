@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   IonCard,
   IonCardHeader,
@@ -7,17 +7,26 @@ import {
   IonModal
 } from '@ionic/react';
 
-import { BuildTrainingContext } from './TrainingsCreate';
 import DaySelectorContent from 'components/day_selector/DaySelector';
 
-const DaySelector = () => {
+import { AppDate } from 'types/dates';
+
+type Props = {
+  dates: AppDate[];
+  addDate: (date: AppDate) => void;
+  editDate: (date: AppDate) => void;
+  removeDate: (date: AppDate) => void;
+  dayToOpen: string;
+};
+
+const DaySelector: React.FC<Props> = ({
+  dates,
+  addDate,
+  editDate,
+  removeDate,
+  dayToOpen
+}) => {
   const [isOpen, setOpen] = useState(false);
-
-  const context = useContext(BuildTrainingContext);
-
-  if (!context) return null;
-
-  const { addDate, dates, editDate, removeDate, dayToOpen } = context;
 
   return (
     <React.Fragment>

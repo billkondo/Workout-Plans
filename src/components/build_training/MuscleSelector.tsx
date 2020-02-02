@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   IonCard,
   IonCardHeader,
@@ -8,25 +8,29 @@ import {
 
 import MuscleSelectorComponent from 'components/muscle_selector/MuscleSelector';
 
-import { BuildTrainingContext } from './TrainingsCreate';
 import { Muscle, muscleOptions } from 'types/muscles';
 
-const MuscleSelector = () => {
+type Props = {
+  muscles: Muscle[];
+
+  addMuscle: (muscle: Muscle) => void;
+  removeMuscle: (muscle: Muscle) => void;
+};
+
+const MuscleSelector: React.FC<Props> = ({
+  muscles,
+  addMuscle,
+  removeMuscle
+}) => {
   const [isOpen, setOpen] = useState(false);
-  const context = useContext(BuildTrainingContext);
-
-  if (!context) return null;
-
-  const selectMuscle = (muscle: Muscle) => context.addMuscle(muscle);
-  const unselectMuscle = (muscle: Muscle) => context.removeMuscle(muscle);
 
   return (
     <React.Fragment>
       <MuscleSelectorComponent
         muscleOptions={muscleOptions}
-        selectMuscle={selectMuscle}
-        unselectMuscle={unselectMuscle}
-        selectedMuscles={context.muscles}
+        selectMuscle={addMuscle}
+        unselectMuscle={removeMuscle}
+        selectedMuscles={muscles}
         isOpen={isOpen}
         closeSelector={() => setOpen(false)}
       />

@@ -1,17 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { IonGrid, IonRow, IonCol, IonChip, IonLabel } from '@ionic/react';
 import { format } from 'date-fns';
 import { colors } from '@material-ui/core';
 
-import { BuildTrainingContext } from './TrainingsCreate';
+import { ExerciseOption } from 'types/exercises';
+import { Muscle } from 'types/muscles';
+import { AppDate } from 'types/dates';
+import { TrainingError } from 'types/training';
 
-const FinalPlan = () => {
-  const context = useContext(BuildTrainingContext);
+type Props = {
+  muscles: Muscle[];
+  exercisesOptions: ExerciseOption[];
+  dates: AppDate[];
+  errors: TrainingError;
+};
 
-  if (!context) return null;
-
-  const { muscles, exerciseOptions, dates, errors } = context;
-
+const FinalPlan: React.FC<Props> = ({
+  muscles,
+  exercisesOptions,
+  dates,
+  errors
+}) => {
   const isMusclesOK = !errors.muscles;
   const isExerciseOptionsOK = !errors.exerciseOptions;
   const isDatesOK = !errors.dates;
@@ -73,13 +82,13 @@ const FinalPlan = () => {
               </IonRow>
             )}
 
-            {isExerciseOptionsOK && exerciseOptions.length === 0 && (
+            {isExerciseOptionsOK && exercisesOptions.length === 0 && (
               <IonRow>
                 <IonCol>Nenhum exercício selecionado</IonCol>
               </IonRow>
             )}
 
-            {exerciseOptions.map(e => {
+            {exercisesOptions.map(e => {
               return (
                 <IonChip key={e.exercise.id}>
                   <IonLabel>{e.exercise.title}</IonLabel>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   IonCard,
   IonCardHeader,
@@ -7,34 +7,35 @@ import {
 } from '@ionic/react';
 
 import ExerciseSelectorComponent from 'components/exercise_selector/ExerciseSelector';
-import { BuildTrainingContext } from './TrainingsCreate';
-import { Exercise } from 'types/exercises';
 
-const ExerciesSelector = () => {
-  const [isOpen, setOpen] = useState(false);
-  const context = useContext(BuildTrainingContext);
+import { Exercise, ExerciseOption } from 'types/exercises';
 
-  if (!context) return null;
-
-  const selectExerciseOption = (exercise: Exercise) =>
-    context.addExerciseOption(exercise);
-
-  const unselectExerciseOption = (exercise: Exercise) =>
-    context.removeExerciseOption(exercise);
-
-  const editOption = (
+type Props = {
+  addExerciseOption: (exercise: Exercise) => void;
+  removeExerciseOption: (exercise: Exercise) => void;
+  exercisesOptions: ExerciseOption[];
+  editExerciseOptionInfo: (
     key: string,
     value: number | number[],
     exercise: Exercise
-  ) => context.editExerciseOptionInfo(key, value, exercise);
+  ) => void;
+};
+
+const ExerciesSelector: React.FC<Props> = ({
+  addExerciseOption,
+  removeExerciseOption,
+  exercisesOptions,
+  editExerciseOptionInfo
+}) => {
+  const [isOpen, setOpen] = useState(false);
 
   return (
     <React.Fragment>
       <ExerciseSelectorComponent
-        selectedExercisesOptions={context.exerciseOptions}
-        selectExerciseOption={selectExerciseOption}
-        unselectExerciseOption={unselectExerciseOption}
-        editOption={editOption}
+        selectedExercisesOptions={exercisesOptions}
+        selectExerciseOption={addExerciseOption}
+        unselectExerciseOption={removeExerciseOption}
+        editOption={editExerciseOptionInfo}
         isOpen={isOpen}
         closeSelector={() => setOpen(false)}
       />
