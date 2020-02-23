@@ -43,8 +43,10 @@ const DaySelector: React.FC<Props> = ({
 
       <IonCard onClick={() => setOpen(true)}>
         <IonCardHeader>
-          <IonCardTitle className="ion-padding">Escolher dia</IonCardTitle>
-          <IonCardSubtitle className="ion-padding">
+          <IonCardTitle className="ion-padding sub-header-font">
+            Escolher dia
+          </IonCardTitle>
+          <IonCardSubtitle className="ion-padding ">
             Quando esse treino será executado
           </IonCardSubtitle>
         </IonCardHeader>

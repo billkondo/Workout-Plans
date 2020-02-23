@@ -42,7 +42,7 @@ const ExerciesSelector: React.FC<Props> = ({
 
       <IonCard onClick={() => setOpen(true)}>
         <IonCardHeader>
-          <IonCardTitle className="ion-padding">
+          <IonCardTitle className="ion-padding sub-header-font">
             Escolher exercícios
           </IonCardTitle>
           <IonCardSubtitle className="ion-padding">

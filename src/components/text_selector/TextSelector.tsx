@@ -88,7 +88,7 @@ const TextSelector: React.FC<Props> = ({
 
       <IonCard onClick={() => setOpen(true)}>
         <IonCardHeader>
-          <IonCardTitle className="ion-padding">
+          <IonCardTitle className="ion-padding sub-header-font">
             {!!title ? title : 'Escolher nome e descrição'}
           </IonCardTitle>
 
