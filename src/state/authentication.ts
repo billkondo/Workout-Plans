@@ -1,43 +1,55 @@
-const SET_USER_ID = 'SET_USER_ID';
+const SET_USER_DATA = 'SET_USER_DATA';
+const RESET_USER_DATA = 'RESET_USER_DATA';
 
-interface AuthenticationState {
+type AuthenticationState = {
   userID: string;
-}
-
-interface SetUserIDAction {
-  type: typeof SET_USER_ID;
-  payload: {
-    userID: string;
-  };
-}
-
-const setUserID = (userID: string): SetUserIDAction => ({
-  type: SET_USER_ID,
-  payload: {
-    userID
-  }
-});
-
-const actions = {
-  setUserID
+  email: string;
 };
 
-type AuthenticationActionType = SetUserIDAction;
+type AuthenticationAction =
+  | {
+      type: typeof SET_USER_DATA;
+      payload: {
+        userID: string;
+        email: string;
+      };
+    }
+  | {
+      type: typeof RESET_USER_DATA;
+    };
+
+const actions = {
+  setUserData: (userID: string, email: string): AuthenticationAction => ({
+    type: SET_USER_DATA,
+    payload: {
+      userID,
+      email
+    }
+  }),
+  resetUserData: () => ({
+    type: RESET_USER_DATA
+  })
+};
 
 const initialState: AuthenticationState = {
-  userID: ''
+  userID: '',
+  email: ''
 };
 
 const reducer = (
   state = initialState,
-  action: AuthenticationActionType
+  action: AuthenticationAction
 ): AuthenticationState => {
   switch (action.type) {
-    case SET_USER_ID:
+    case SET_USER_DATA:
       return {
         ...state,
-        userID: action.payload.userID
+        userID: action.payload.userID,
+        email: action.payload.email
       };
+
+    case RESET_USER_DATA:
+      return initialState;
 
     default:
       return state;

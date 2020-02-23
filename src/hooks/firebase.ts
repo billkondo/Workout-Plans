@@ -10,7 +10,7 @@ import { useAuth } from 'hooks/auth';
 import { Exercise, ExerciseFields } from 'types/exercises';
 
 export const useFirebase = () => {
-  const { setUserID } = useAuth();
+  const { setUserData, resetUserData } = useAuth();
 
   // Initialize firebase
   useEffect(() => {
@@ -24,14 +24,14 @@ export const useFirebase = () => {
       if (user) {
         // User is signed in
         console.log('sign in', user);
-        setUserID(user.uid);
+        setUserData(user.uid, user.email);
       } else {
         // User is signed out
         console.log('sign out');
-        setUserID('');
+        resetUserData();
       }
     });
-  }, [setUserID]);
+  }, [resetUserData, setUserData]);
 };
 
 export const useFirebaseMethods = () => {

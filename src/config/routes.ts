@@ -5,7 +5,8 @@ const routes = {
   home: {
     root: '/home',
     training: '/home/training',
-    exercises: '/home/exercises'
+    exercises: '/home/exercises',
+    profile: '/home/profile'
   },
   trainings: {
     create: '/trainings/create',
