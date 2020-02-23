@@ -10,7 +10,7 @@ import {
   IonText
 } from '@ionic/react';
 
-import WeekTraining from './WeekTraining';
+import WeekTraining from './WeeklyTrainings';
 
 import routes from 'config/routes';
 
@@ -26,7 +26,7 @@ const TrainingsHome = () => {
                 routerLink={routes.trainings.create}
               >
                 <IonCardContent>
-                  <IonGrid>
+                  <IonGrid className="header-font">
                     <IonRow>
                       <IonText>Montar</IonText>
                     </IonRow>
@@ -69,7 +69,7 @@ const TrainingsHome = () => {
                 routerLink={routes.trainings.list}
               >
                 <IonCardContent>
-                  <IonGrid>
+                  <IonGrid className="header-font">
                     <IonRow>
                       <IonText>Meus</IonText>
                     </IonRow>

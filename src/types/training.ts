@@ -30,3 +30,8 @@ export type Training = {
   createdTime?: Timestamp;
   id: string;
 };
+
+export type DailyTraining = {
+  trainings: Training[];
+  date: string;
+};

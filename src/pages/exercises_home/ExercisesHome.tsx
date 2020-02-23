@@ -26,7 +26,7 @@ const ExercisesHome = () => {
                 routerLink={routes.exercises.create}
               >
                 <IonCardContent>
-                  <IonGrid>
+                  <IonGrid className="header-font">
                     <IonRow>
                       <IonText>Montar</IonText>
                     </IonRow>
