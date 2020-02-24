@@ -13,7 +13,7 @@ import {
   IonCol,
   IonText
 } from '@ionic/react';
-import { arrowBack } from 'ionicons/icons';
+import { close } from 'ionicons/icons';
 
 import { DailyTraining, Training } from 'types/training';
 
@@ -67,7 +67,7 @@ const TrainingCardModal: React.FC<Props> = ({ closeModal, dailyTraining }) => {
           <IonToolbar>
             <IonButtons slot="primary">
               <IonButton onClick={closeModal}>
-                <IonIcon icon={arrowBack}></IonIcon>
+                <IonIcon icon={close}></IonIcon>
               </IonButton>
             </IonButtons>
             <IonTitle className="header-font">

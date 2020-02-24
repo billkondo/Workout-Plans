@@ -38,7 +38,7 @@ const FinalPlan: React.FC<Props> = ({
           <IonGrid>
             <IonRow>
               <IonCol>
-                <h6>Grupos musculares</h6>
+                <h6 className="sub-header-font">Grupos musculares</h6>
               </IonCol>
             </IonRow>
 
@@ -72,7 +72,7 @@ const FinalPlan: React.FC<Props> = ({
           <IonGrid>
             <IonRow>
               <IonCol>
-                <h6>Exercícios</h6>
+                <h6 className="sub-header-font">Exercícios</h6>
               </IonCol>
             </IonRow>
 
@@ -106,7 +106,7 @@ const FinalPlan: React.FC<Props> = ({
           <IonGrid>
             <IonRow>
               <IonCol>
-                <h6>Dias</h6>
+                <h6 className="sub-header-font">Dias</h6>
               </IonCol>
             </IonRow>
 

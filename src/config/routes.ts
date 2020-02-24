@@ -25,6 +25,9 @@ const routes = {
       id ? `/exercises/filters/${id}` : '/exercises/filters/:id',
     edit: (id?: string) =>
       id ? `/exercises/edit/${id}` : '/exercises/edit/:id'
+  },
+  profile: {
+    settings: '/profile/settings'
   }
 };
 

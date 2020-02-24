@@ -19,6 +19,8 @@ import ExercisesView from 'pages/exercises_view/ExercisesView';
 import ExercisesFilter from 'pages/exercises_filter/ExercisesFilter';
 import ExercisesEdit from 'pages/exercises_edit/ExercisesEdit';
 
+import ProfileSettings from 'pages/profile_settings/ProfileSettings';
+
 import { useFirebase } from 'hooks/firebase';
 import { useTrainingsPersistence } from 'hooks/trainings/persistence';
 import { useExercisesPersistence } from 'hooks/exercises/persistence';
@@ -106,6 +108,12 @@ const App: React.FC = () => {
             exact
             path={routes.trainings.edit()}
             component={TrainingsEdit}
+          />
+
+          <Route
+            exact
+            path={routes.profile.settings}
+            component={ProfileSettings}
           />
         </IonRouterOutlet>
       </IonReactRouter>
