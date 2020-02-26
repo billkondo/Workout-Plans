@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  IonCard,
-  IonCardContent,
-  IonChip,
-  IonLabel,
-  IonIcon,
-  IonRouterLink
-} from '@ionic/react';
+import { IonCard, IonCardContent, IonIcon, IonRouterLink } from '@ionic/react';
 import { Collapse, Grow, Grid } from '@material-ui/core';
 import { settings } from 'ionicons/icons';
 

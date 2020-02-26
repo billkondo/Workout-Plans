@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { IonGrid, IonRow, IonCol, IonChip, IonLabel } from '@ionic/react';
+import { IonGrid, IonRow, IonCol } from '@ionic/react';
 import { IconButton } from '@material-ui/core';
 import { Settings } from '@material-ui/icons';
 
 import MuscleSelectorComponent from 'components/muscle_selector/MuscleSelector';
 
 import { muscleOptions, Muscle } from 'types/muscles';
+
+import MuscleChip from 'components/MuscleChip';
 
 type Props = {
   muscles: Muscle[];
@@ -54,11 +56,7 @@ const MuscleList: React.FC<Props> = ({ muscles, addMuscle, removeMuscle }) => {
         <IonRow>
           <IonCol style={{ padding: 0 }}>
             {muscles.map(m => {
-              return (
-                <IonChip key={m.type}>
-                  <IonLabel>{m.label}</IonLabel>
-                </IonChip>
-              );
+              return <MuscleChip key={m.type} muscle={m}></MuscleChip>;
             })}
           </IonCol>
         </IonRow>

@@ -32,6 +32,8 @@ const MuscleCard: React.FC<Prop> = ({
 
   const isMainMuscleSelected = isMuscleSelected(muscleOption.muscle);
 
+  const hasSubMuscles = muscleOption.subMuscles.length > 0;
+
   return (
     <IonCard>
       <IonCardHeader className="ion-padding">
@@ -58,26 +60,28 @@ const MuscleCard: React.FC<Prop> = ({
         </IonGrid>
       </IonCardHeader>
 
-      <Collapse in={isMainMuscleSelected}>
-        <IonCardContent className="ion-padding">
-          <IonGrid style={{ padding: 0 }}>
-            {muscleOption.subMuscles.map(subMuscle => {
-              return (
-                <IonRow key={subMuscle.type}>
-                  <IonCol style={{ padding: 0 }}>
-                    <SubMuscleLine
-                      subMuscle={subMuscle}
-                      isSelected={isMuscleSelected(subMuscle)}
-                      selectMuscle={() => selectMuscle(subMuscle)}
-                      unselectMuscle={() => unselectMuscle(subMuscle)}
-                    />
-                  </IonCol>
-                </IonRow>
-              );
-            })}
-          </IonGrid>
-        </IonCardContent>
-      </Collapse>
+      {hasSubMuscles && (
+        <Collapse in={isMainMuscleSelected}>
+          <IonCardContent className="ion-padding">
+            <IonGrid style={{ padding: 0 }}>
+              {muscleOption.subMuscles.map(subMuscle => {
+                return (
+                  <IonRow key={subMuscle.type}>
+                    <IonCol style={{ padding: 0 }}>
+                      <SubMuscleLine
+                        subMuscle={subMuscle}
+                        isSelected={isMuscleSelected(subMuscle)}
+                        selectMuscle={() => selectMuscle(subMuscle)}
+                        unselectMuscle={() => unselectMuscle(subMuscle)}
+                      />
+                    </IonCol>
+                  </IonRow>
+                );
+              })}
+            </IonGrid>
+          </IonCardContent>
+        </Collapse>
+      )}
     </IonCard>
   );
 };

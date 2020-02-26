@@ -4,13 +4,13 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardContent,
-  IonChip,
-  IonLabel,
   IonText
 } from '@ionic/react';
 
 import { DailyTraining, Training } from 'types/training';
 import { Muscle } from 'types/muscles';
+
+import MuscleChip from 'components/MuscleChip';
 
 type Props = {
   dailyTraining: DailyTraining;
@@ -52,11 +52,7 @@ const DailyTrainingCard: React.FC<Props> = ({
 
       <IonCardContent>
         {muscles.map(m => {
-          return (
-            <IonChip key={m.type}>
-              <IonLabel>{`${m.label}`}</IonLabel>
-            </IonChip>
-          );
+          return <MuscleChip key={m.type} muscle={m}></MuscleChip>;
         })}
 
         {isRestDay && (

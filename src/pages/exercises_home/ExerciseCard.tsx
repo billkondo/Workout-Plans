@@ -4,8 +4,6 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
-  IonChip,
-  IonLabel,
   IonTextarea,
   IonIcon,
   IonRouterLink
@@ -15,6 +13,8 @@ import { settings } from 'ionicons/icons';
 
 import routes from 'config/routes';
 import { Exercise } from 'types/exercises';
+
+import MuscleChip from 'components/MuscleChip';
 
 type Props = {
   exercise: Exercise;
@@ -47,11 +47,7 @@ const ExerciseCard: React.FC<Props> = ({ exercise }) => {
 
           <Grid item container>
             {exercise.muscles.map(m => {
-              return (
-                <IonChip key={m.type}>
-                  <IonLabel>{m.label}</IonLabel>
-                </IonChip>
-              );
+              return <MuscleChip key={m.type} muscle={m}></MuscleChip>;
             })}
           </Grid>
 

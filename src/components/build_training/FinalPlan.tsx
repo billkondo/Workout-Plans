@@ -8,6 +8,8 @@ import { Muscle } from 'types/muscles';
 import { AppDate } from 'types/dates';
 import { TrainingError } from 'types/training';
 
+import MuscleChip from 'components/MuscleChip';
+
 type Props = {
   muscles: Muscle[];
   exercisesOptions: ExerciseOption[];
@@ -55,11 +57,7 @@ const FinalPlan: React.FC<Props> = ({
             )}
 
             {muscles.map(m => {
-              return (
-                <IonChip key={m.type}>
-                  <IonLabel>{m.label}</IonLabel>
-                </IonChip>
-              );
+              return <MuscleChip key={m.type} muscle={m}></MuscleChip>;
             })}
 
             <IonRow></IonRow>

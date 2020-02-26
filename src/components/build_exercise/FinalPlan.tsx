@@ -1,17 +1,11 @@
 import React from 'react';
-import {
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonChip,
-  IonLabel,
-  IonTextarea,
-  IonText
-} from '@ionic/react';
+import { IonGrid, IonRow, IonCol, IonTextarea, IonText } from '@ionic/react';
 import { colors } from '@material-ui/core';
 
 import { ExerciseError } from 'types/exercises';
 import { Muscle } from 'types/muscles';
+
+import MuscleChip from 'components/MuscleChip';
 
 type Props = {
   title: string;
@@ -60,11 +54,7 @@ const FinalPlan: React.FC<Props> = ({
             )}
 
             {muscles.map(m => {
-              return (
-                <IonChip key={m.type}>
-                  <IonLabel>{m.label}</IonLabel>
-                </IonChip>
-              );
+              return <MuscleChip key={m.type} muscle={m}></MuscleChip>;
             })}
 
             <IonRow></IonRow>

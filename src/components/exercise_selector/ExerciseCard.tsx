@@ -7,15 +7,15 @@ import {
   IonCardSubtitle,
   IonGrid,
   IonRow,
-  IonCol,
-  IonChip,
-  IonLabel
+  IonCol
 } from '@ionic/react';
 import { Collapse } from '@material-ui/core';
 
 import CheckComponent from 'components/check/Check';
 import Range from 'components/input/Range';
 import { ExerciseOption, Exercise, ExerciseInfo } from 'types/exercises';
+
+import MuscleChip from 'components/MuscleChip';
 
 type Props = {
   exercise: Exercise;
@@ -97,11 +97,7 @@ const ExerciseCard: React.FC<Props> = ({
             <IonCol style={{ padding: 0 }}>
               {exercise.muscles &&
                 exercise.muscles.map(muscle => {
-                  return (
-                    <IonChip key={muscle.type}>
-                      <IonLabel>{muscle.label}</IonLabel>
-                    </IonChip>
-                  );
+                  return <MuscleChip key={muscle.type} muscle={muscle}></MuscleChip>;
                 })}
             </IonCol>
           </IonRow>
