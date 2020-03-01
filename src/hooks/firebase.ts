@@ -28,6 +28,9 @@ export const useFirebase = () => {
       } else {
         // User is signed out
         console.log('sign out');
+
+        // TODO should clear storage
+        console.log('TODO should clear storage');
         resetUserData();
       }
     });

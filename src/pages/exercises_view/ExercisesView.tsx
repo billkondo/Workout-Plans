@@ -22,18 +22,17 @@ import {
   IonLoading
 } from '@ionic/react';
 import { arrowBack, create, arrowDropleft, trash } from 'ionicons/icons';
-import { RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import routes from 'config/routes';
 import { useExercisesGetter } from 'hooks/exercises/getter';
 import { useExercisesDelete } from 'hooks/exercises/delete';
 
-interface Props extends RouteComponentProps<{ id: string }> {}
-
-const ExercisesView: React.FC<Props> = ({ match }) => {
+const ExercisesView = () => {
+  const { id } = useParams();
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const { findExerciseByID } = useExercisesGetter();
-  const exercise = findExerciseByID(match.params.id);
+  const exercise = findExerciseByID(id);
   const { deleteExercise, isDeleting } = useExercisesDelete();
   const goBackButton = useRef<HTMLIonButtonElement>(null);
 
@@ -122,7 +121,7 @@ const ExercisesView: React.FC<Props> = ({ match }) => {
             <IonFabList side="start">
               <IonFabButton
                 routerDirection="forward"
-                routerLink={routes.exercises.edit(match.params.id)}
+                routerLink={routes.exercises.edit(id)}
               >
                 <IonIcon icon={create}></IonIcon>
               </IonFabButton>

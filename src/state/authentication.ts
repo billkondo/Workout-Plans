@@ -1,3 +1,5 @@
+import { localStorage } from 'storage';
+
 const SET_USER_DATA = 'SET_USER_DATA';
 const RESET_USER_DATA = 'RESET_USER_DATA';
 
@@ -31,7 +33,8 @@ const actions = {
   })
 };
 
-const initialState: AuthenticationState = {
+// ! temporary
+const initialState: AuthenticationState = localStorage().find('auth') || {
   userID: '',
   email: ''
 };
@@ -49,7 +52,10 @@ const reducer = (
       };
 
     case RESET_USER_DATA:
-      return initialState;
+      return {
+        userID: '',
+        email: ''
+      };
 
     default:
       return state;

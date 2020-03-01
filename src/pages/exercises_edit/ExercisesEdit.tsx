@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import BuildExercise from 'components/build_exercise/BuildExercise';
 
@@ -8,11 +8,10 @@ import { useExercisesGetter } from 'hooks/exercises/getter';
 
 import routes from 'config/routes';
 
-interface Props extends RouteComponentProps<{ id: string }> {}
-
-const ExercisesEdit: React.FC<Props> = ({ match }) => {
+const ExercisesEdit = () => {
+  const { id } = useParams();
   const { findExerciseByID } = useExercisesGetter();
-  const exercise = findExerciseByID(match.params.id);
+  const exercise = findExerciseByID(id);
   const {
     state,
     addMuscle,
@@ -26,7 +25,7 @@ const ExercisesEdit: React.FC<Props> = ({ match }) => {
   return (
     <BuildExercise
       headerTitle="Editando exercício"
-      backRoute={routes.exercises.view(match.params.id)}
+      backRoute={routes.exercises.view(id)}
       buttonLabel="Salvar mudanças"
       build={editExercise}
       title={state.title}

@@ -9,9 +9,9 @@ import {
   IonButton,
   IonIcon
 } from '@ionic/react';
-import { RouteComponentProps } from 'react-router-dom';
 import { arrowBack } from 'ionicons/icons';
 import { Grid } from '@material-ui/core';
+import { useRouteMatch } from 'react-router';
 
 import { ExercisesFiltersIDs } from 'types/exercises';
 
@@ -23,10 +23,13 @@ import { useExercisesGetter } from 'hooks/exercises/getter';
 
 import MuscleList from './MuscleList';
 
-interface Props extends RouteComponentProps<{ id: ExercisesFiltersIDs }> {}
+type RouteParams = {
+  id: ExercisesFiltersIDs;
+};
 
-const ExercisesFilter: React.FC<Props> = ({ match }) => {
-  const id = match.params.id;
+const ExercisesFilter = () => {
+  const match = useRouteMatch<RouteParams>(routes.exercises.filters());
+  const id = match ? match.params.id || 'home' : 'home';
   const { exercises } = useExercisesGetter();
   const {
     addMuscle,

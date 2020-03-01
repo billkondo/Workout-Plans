@@ -10,7 +10,7 @@ import {
 } from '@ionic/react';
 import { InputChangeEventDetail } from '@ionic/core';
 import React, { useReducer, useState, useEffect, useCallback } from 'react';
-import { History } from 'history';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import Center from 'components/center/Center';
 import Input from 'components/input/Input';
@@ -28,10 +28,6 @@ type Errors = {
 type Form = {
   email: string;
   password: string;
-};
-
-type Props = {
-  history: History;
 };
 
 type State = {
@@ -73,10 +69,14 @@ const initialState: State = {
   errors: {}
 };
 
-const Login: React.FC<Props> = ({ history }) => {
+const Login = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isErrorAlertOpen, setErrorAlert] = useState(false);
   const login = useLogin();
+  const history = useHistory();
+  const location = useLocation();
+
+  const { path } = location.state || { path: routes.home.root };
 
   const handleChange = (e: CustomEvent<InputChangeEventDetail>) => {
     if (e.target !== null) {
@@ -116,13 +116,19 @@ const Login: React.FC<Props> = ({ history }) => {
       if (isValid) {
         await login(form);
 
-        history.push(routes.home.root);
+        history.replace({
+          pathname: !path
+            ? routes.home.root
+            : path === routes.profile.settings
+            ? routes.home.root
+            : path
+        });
       }
     } catch (err) {
       console.log(err);
       setErrorAlert(true);
     }
-  }, [history, login, state.email, state.password]);
+  }, [history, login, path, state.email, state.password]);
 
   useEffect(() => {
     const handleSubmitOnEnter = (e: KeyboardEvent) => {

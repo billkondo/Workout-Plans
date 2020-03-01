@@ -4,6 +4,8 @@ import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 // Custom components
+import AppContextProvider from 'AppContextProvider';
+
 import Home from 'pages/Home';
 
 import Login from 'pages/Login';
@@ -21,9 +23,10 @@ import ExercisesEdit from 'pages/exercises_edit/ExercisesEdit';
 
 import ProfileSettings from 'pages/profile_settings/ProfileSettings';
 
-import { useFirebase } from 'hooks/firebase';
-import { useTrainingsPersistence } from 'hooks/trainings/persistence';
-import { useExercisesPersistence } from 'hooks/exercises/persistence';
+import PrivateRoute from 'components/PrivateRoute';
+
+// Hooks
+import { useApp } from 'hooks/app';
 
 // Config files
 import routes from 'config/routes'; // URL definitions
@@ -49,75 +52,68 @@ import './theme/variables.css';
 import './theme/app.scss';
 
 const App: React.FC = () => {
-  useFirebase();
-  useTrainingsPersistence();
-  useExercisesPersistence();
+  useApp();
 
   return (
-    <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet id="main">
-          <Route path={routes.home.root} component={Home} />
-          <Route
-            exact
-            path="/"
-            render={() => <Redirect to={routes.home.root} />}
-          />
-          <Route
-            exact
-            path={routes.trainings.create}
-            component={TrainingsCreate}
-          />
-          <Route exact path={routes.login} component={Login} />
-          <Route
-            exact
-            path={routes.exercises.create}
-            component={ExercisesCreate}
-          />
-          <Route exact path={routes.trainings.list} component={TrainingsList} />
-          <Route
-            exact
-            path={routes.exercises.view()}
-            component={ExercisesView}
-          />
-          <Route
-            exact
-            path={routes.trainings.filters}
-            component={TrainingsFilter}
-          />
+    <AppContextProvider>
+      <IonApp>
+        <IonReactRouter>
+          <IonRouterOutlet id="main">
+            <Route exact path={routes.login} component={Login} />
 
-          <Route
-            exact
-            path={routes.exercises.filters()}
-            component={ExercisesFilter}
-          />
+            <Route
+              exact
+              path="/"
+              render={() => <Redirect to={routes.home.root} />}
+            />
 
-          <Route
-            exact
-            path={routes.exercises.edit()}
-            component={ExercisesEdit}
-          />
+            <PrivateRoute path={routes.home.root}>
+              <Home></Home>
+            </PrivateRoute>
 
-          <Route
-            exact
-            path={routes.trainings.view()}
-            component={TrainingsView}
-          />
+            <PrivateRoute exact path={routes.trainings.create}>
+              <TrainingsCreate></TrainingsCreate>
+            </PrivateRoute>
 
-          <Route
-            exact
-            path={routes.trainings.edit()}
-            component={TrainingsEdit}
-          />
+            <PrivateRoute exact path={routes.exercises.create}>
+              <ExercisesCreate></ExercisesCreate>
+            </PrivateRoute>
 
-          <Route
-            exact
-            path={routes.profile.settings}
-            component={ProfileSettings}
-          />
-        </IonRouterOutlet>
-      </IonReactRouter>
-    </IonApp>
+            <PrivateRoute exact path={routes.trainings.list}>
+              <TrainingsList></TrainingsList>
+            </PrivateRoute>
+
+            <PrivateRoute exact path={routes.exercises.view()}>
+              <ExercisesView></ExercisesView>
+            </PrivateRoute>
+
+            <PrivateRoute exact path={routes.trainings.filters}>
+              <TrainingsFilter></TrainingsFilter>
+            </PrivateRoute>
+
+            <PrivateRoute exact path={routes.exercises.filters()}>
+              <ExercisesFilter></ExercisesFilter>
+            </PrivateRoute>
+
+            <PrivateRoute exact path={routes.exercises.edit()}>
+              <ExercisesEdit></ExercisesEdit>
+            </PrivateRoute>
+
+            <PrivateRoute exact path={routes.trainings.view()}>
+              <TrainingsView></TrainingsView>
+            </PrivateRoute>
+
+            <PrivateRoute exact path={routes.trainings.edit()}>
+              <TrainingsEdit></TrainingsEdit>
+            </PrivateRoute>
+
+            <PrivateRoute exact path={routes.profile.settings}>
+              <ProfileSettings></ProfileSettings>
+            </PrivateRoute>
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </IonApp>
+    </AppContextProvider>
   );
 };
 

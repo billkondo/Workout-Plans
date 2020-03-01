@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import BuildTraining from 'components/build_training/BuildTraining';
 
@@ -8,11 +8,10 @@ import routes from 'config/routes';
 import { useTrainingsBuild } from 'hooks/trainings/build';
 import { useTrainingsGetter } from 'hooks/trainings/getter';
 
-interface Props extends RouteComponentProps<{ id: string }> {}
-
-const TrainingsEdit: React.FC<Props> = ({ match }) => {
+const TrainingsEdit = () => {
+  const { id } = useParams();
   const { findTrainingByID } = useTrainingsGetter();
-  const training = findTrainingByID(match.params.id);
+  const training = findTrainingByID(id);
   const {
     state,
     addMuscle,
@@ -31,7 +30,7 @@ const TrainingsEdit: React.FC<Props> = ({ match }) => {
   return (
     <BuildTraining
       headerTitle="Editando treino"
-      backRoute={routes.trainings.view(match.params.id)}
+      backRoute={routes.trainings.view(id)}
       buttonLabel="Editar treino"
       build={editTraining}
       muscles={state.muscles}

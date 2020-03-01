@@ -1,9 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState, actions } from 'state';
 
+import { localStorage } from 'storage';
 import { useFirebaseMethods } from 'hooks/firebase';
+import { LogoutInterface } from 'types/auth';
 
 export const useAuth = () => {
   const dispatch = useDispatch();
@@ -36,6 +38,14 @@ type LoginForm = {
   password: string;
 };
 
+export const useAuthPersistence = () => {
+  const authState = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    localStorage().add('auth', authState);
+  }, [authState]);
+};
+
 export const useLogin = () => {
   const { loginWithFirebase } = useFirebaseMethods();
 
@@ -46,12 +56,30 @@ export const useLogin = () => {
   return login;
 };
 
-export const useLogout = () => {
+export const useLogout = (): LogoutInterface => {
   const { logoutWithFirebase } = useFirebaseMethods();
+  const [isLoggingOut, setLoggingOut] = useState(false);
+  const [hasLoggingOutFailed, setLoggingOutFailed] = useState(false);
 
   const logout = async () => {
-    await logoutWithFirebase();
+    try {
+      setLoggingOut(true);
+
+      await logoutWithFirebase();
+
+      setLoggingOut(false);
+    } catch (err) {
+      setLoggingOut(false);
+      setLoggingOutFailed(true);
+    }
   };
 
-  return logout;
+  const dismissLoggingOutFailure = () => setLoggingOutFailed(false);
+
+  return {
+    isLoggingOut,
+    logout,
+    hasLoggingOutFailed,
+    dismissLoggingOutFailure
+  };
 };

@@ -7,8 +7,8 @@ import {
   IonButton,
   IonIcon
 } from '@ionic/react';
-import { RouteComponentProps } from 'react-router-dom';
 import { arrowBack } from 'ionicons/icons';
+import { useParams } from 'react-router';
 
 import { useTrainingsGetter } from 'hooks/trainings/getter';
 import { useTrainingsDelete } from 'hooks/trainings/delete';
@@ -20,11 +20,10 @@ import routes from 'config/routes';
 
 import { Training } from 'types/training';
 
-interface Props extends RouteComponentProps<{ id: string }> {}
-
-const TrainingsView: React.FC<Props> = ({ match }) => {
+const TrainingsView = () => {
+  const { id } = useParams();
   const { findTrainingByID } = useTrainingsGetter();
-  const id = match.params.id;
+
   const training = findTrainingByID(id);
   const goBackButton = useRef<HTMLIonButtonElement>(null);
   const { isDeleting, deleteTraining } = useTrainingsDelete();

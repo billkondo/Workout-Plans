@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   IonPage,
   IonContent,
@@ -9,7 +9,9 @@ import {
   IonIcon,
   IonTitle,
   IonItem,
-  IonLabel
+  IonLabel,
+  IonLoading,
+  IonAlert
 } from '@ionic/react';
 import { arrowBack } from 'ionicons/icons';
 import { Grid, Icon } from '@material-ui/core';
@@ -17,10 +19,37 @@ import { ExitToApp } from '@material-ui/icons';
 
 import routes from 'config/routes';
 
+import { AppContext } from 'app_context';
+
 const ProfileSettings = () => {
+  const { logoutInterface } = useContext(AppContext);
+
+  const {
+    isLoggingOut,
+    hasLoggingOutFailed,
+    dismissLoggingOutFailure,
+    logout
+  } = logoutInterface;
+
+  const onExitButtonClick = async () => {
+    await logout();
+  };
+
   return (
     <IonPage>
       <IonContent>
+        <IonAlert
+          isOpen={hasLoggingOutFailed}
+          header="Erro"
+          message="Não foi possível sair"
+          onDidDismiss={dismissLoggingOutFailure}
+        ></IonAlert>
+
+        <IonLoading
+          isOpen={isLoggingOut}
+          message="Saindo do aplicativo"
+        ></IonLoading>
+
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="primary">
@@ -37,7 +66,7 @@ const ProfileSettings = () => {
 
         <Grid container direction="column">
           <Grid item>
-            <IonItem onClick={() => console.log('logout')}>
+            <IonItem onClick={onExitButtonClick}>
               <Icon>
                 <ExitToApp></ExitToApp>
               </Icon>
