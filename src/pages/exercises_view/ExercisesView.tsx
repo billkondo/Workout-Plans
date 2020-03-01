@@ -12,8 +12,6 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonChip,
-  IonLabel,
   IonFab,
   IonFabButton,
   IonFabList,
@@ -27,6 +25,8 @@ import { useParams } from 'react-router';
 import routes from 'config/routes';
 import { useExercisesGetter } from 'hooks/exercises/getter';
 import { useExercisesDelete } from 'hooks/exercises/delete';
+
+import MuscleChip from 'components/MuscleChip';
 
 const ExercisesView = () => {
   const { id } = useParams();
@@ -101,11 +101,7 @@ const ExercisesView = () => {
             <IonRow>
               <IonCol>
                 {exercise.muscles.map(m => {
-                  return (
-                    <IonChip key={m.type}>
-                      <IonLabel>{m.label}</IonLabel>
-                    </IonChip>
-                  );
+                  return <MuscleChip muscle={m} key={m.type}></MuscleChip>;
                 })}
               </IonCol>
             </IonRow>
