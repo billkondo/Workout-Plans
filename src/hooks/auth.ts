@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState, actions } from 'state';
 
+import { LoginFormParams } from 'models/login_form';
+
 import { localStorage } from 'storage';
 import { useFirebaseMethods } from 'hooks/firebase';
 import { LogoutInterface } from 'types/auth';
@@ -49,11 +51,13 @@ export const useAuthPersistence = () => {
 export const useLogin = () => {
   const { loginWithFirebase } = useFirebaseMethods();
 
-  const login = async (form: LoginForm) => {
+  const login = async (form: LoginFormParams) => {
     await loginWithFirebase(form.email, form.password);
   };
 
-  return login;
+  return {
+    login
+  };
 };
 
 export const useLogout = (): LogoutInterface => {

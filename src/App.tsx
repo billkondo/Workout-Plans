@@ -8,7 +8,7 @@ import AppContextProvider from 'AppContextProvider';
 
 import Home from 'pages/Home';
 
-import Login from 'pages/Login';
+import LoginPage from 'pages/login/LoginPage';
 
 import TrainingsCreate from 'pages/trainings_create/TrainingsCreate';
 import TrainingsList from 'pages/trainings_list/TrainingsList';
@@ -59,7 +59,7 @@ const App: React.FC = () => {
       <IonApp>
         <IonReactRouter>
           <IonRouterOutlet id="main">
-            <Route exact path={routes.login} component={Login} />
+            <Route exact path={routes.login} component={LoginPage} />
 
             <Route
               exact
