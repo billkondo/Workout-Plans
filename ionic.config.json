@@ -1,5 +1,7 @@
 {
   "name": "workout_plan",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }

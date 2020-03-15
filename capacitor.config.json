@@ -1,0 +1,8 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "workout_plan",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}

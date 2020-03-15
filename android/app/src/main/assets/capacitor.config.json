@@ -1,0 +1,8 @@
+{
+  "appId": "com.billkondo.workoutplans",
+  "appName": "Workout Plans",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}
