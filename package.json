@@ -22,7 +22,7 @@
     "firebase": "^7.5.0",
     "ionicons": "^4.6.3",
     "lodash": "^4.17.15",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-redux": "^7.1.3",
